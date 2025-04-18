@@ -32,7 +32,7 @@ class IAPPurchasePendingUpdate
 				final getProductsJNI:Null<Dynamic> = JNI.callMember(getProductsMemberJNI, handle, []);
 
 				if (getProductsJNI != null)
-					return IAPUtil.getStringArrayFromList(getProductsJNI());
+					return IAPUtil.getStringArrayFromList(getProductsJNI);
 			}
 		}
 
@@ -52,7 +52,7 @@ class IAPPurchasePendingUpdate
 				final getPurchaseTokenJNI:Null<Dynamic> = JNI.callMember(getPurchaseTokenMemberJNI, handle, []);
 
 				if (getPurchaseTokenJNI != null)
-					return getPurchaseTokenJNI();
+					return getPurchaseTokenJNI;
 			}
 		}
 

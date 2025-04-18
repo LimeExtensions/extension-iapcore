@@ -32,7 +32,7 @@ class IAPPurchase
 				final getDeveloperPayloadJNI:Null<Dynamic> = JNI.callMember(getDeveloperPayloadMemberJNI, handle, []);
 
 				if (getDeveloperPayloadJNI != null)
-					return getDeveloperPayloadJNI();
+					return getDeveloperPayloadJNI;
 			}
 		}
 
@@ -52,7 +52,7 @@ class IAPPurchase
 				final getOrderIdJNI:Null<Dynamic> = JNI.callMember(getOrderIdMemberJNI, handle, []);
 
 				if (getOrderIdJNI != null)
-					return getOrderIdJNI();
+					return getOrderIdJNI;
 			}
 		}
 
@@ -72,7 +72,7 @@ class IAPPurchase
 				final getOriginalJsonJNI:Null<Dynamic> = JNI.callMember(getOriginalJsonMemberJNI, handle, []);
 
 				if (getOriginalJsonJNI != null)
-					return getOriginalJsonJNI();
+					return getOriginalJsonJNI;
 			}
 		}
 
@@ -92,7 +92,7 @@ class IAPPurchase
 				final getPackageNameJNI:Null<Dynamic> = JNI.callMember(getPackageNameMemberJNI, handle, []);
 
 				if (getPackageNameJNI != null)
-					return getPackageNameJNI();
+					return getPackageNameJNI;
 			}
 		}
 
@@ -112,7 +112,7 @@ class IAPPurchase
 				final getPendingPurchaseUpdateJNI:Null<Dynamic> = JNI.callMember(getPendingPurchaseUpdateMemberJNI, handle, []);
 
 				if (getPendingPurchaseUpdateJNI != null)
-					return new IAPPurchasePendingUpdate(getPendingPurchaseUpdateJNI());
+					return new IAPPurchasePendingUpdate(getPendingPurchaseUpdateJNI);
 			}
 		}
 
@@ -132,7 +132,7 @@ class IAPPurchase
 				final getProductsJNI:Null<Dynamic> = JNI.callMember(getProductsMemberJNI, handle, []);
 
 				if (getProductsJNI != null)
-					return IAPUtil.getStringArrayFromList(getProductsJNI());
+					return IAPUtil.getStringArrayFromList(getProductsJNI);
 			}
 		}
 
@@ -151,7 +151,7 @@ class IAPPurchase
 				final getPurchaseStateJNI:Null<Dynamic> = JNI.callMember(getPurchaseStateMemberJNI, handle, []);
 
 				if (getPurchaseStateJNI != null)
-					return getPurchaseStateJNI();
+					return getPurchaseStateJNI;
 			}
 		}
 
@@ -170,7 +170,7 @@ class IAPPurchase
 				final getPurchaseTimeJNI:Null<Dynamic> = JNI.callMember(getPurchaseTimeMemberJNI, handle, []);
 
 				if (getPurchaseTimeJNI != null)
-					return IAPUtil.getFloatFromLong(getPurchaseTimeJNI());
+					return IAPUtil.getFloatFromLong(getPurchaseTimeJNI);
 			}
 		}
 
@@ -190,7 +190,7 @@ class IAPPurchase
 				final getPurchaseTokenJNI:Null<Dynamic> = JNI.callMember(getPurchaseTokenMemberJNI, handle, []);
 
 				if (getPurchaseTokenJNI != null)
-					return getPurchaseTokenJNI();
+					return getPurchaseTokenJNI;
 			}
 		}
 
@@ -209,7 +209,7 @@ class IAPPurchase
 				final getQuantityJNI:Null<Dynamic> = JNI.callMember(getQuantityMemberJNI, handle, []);
 
 				if (getQuantityJNI != null)
-					return getQuantityJNI();
+					return getQuantityJNI;
 			}
 		}
 
@@ -229,7 +229,7 @@ class IAPPurchase
 				final getSignatureJNI:Null<Dynamic> = JNI.callMember(getSignatureMemberJNI, handle, []);
 
 				if (getSignatureJNI != null)
-					return getSignatureJNI();
+					return getSignatureJNI;
 			}
 		}
 
@@ -248,7 +248,7 @@ class IAPPurchase
 				final isAcknowledgedJNI:Null<Dynamic> = JNI.callMember(isAcknowledgedMemberJNI, handle, []);
 
 				if (isAcknowledgedJNI != null)
-					return isAcknowledgedJNI();
+					return isAcknowledgedJNI;
 			}
 		}
 
@@ -267,7 +267,7 @@ class IAPPurchase
 				final isAutoRenewingJNI:Null<Dynamic> = JNI.callMember(isAutoRenewingMemberJNI, handle, []);
 
 				if (isAutoRenewingJNI != null)
-					return isAutoRenewingJNI();
+					return isAutoRenewingJNI;
 			}
 		}
 
@@ -286,7 +286,7 @@ class IAPPurchase
 				final hashCodeJNI:Null<Dynamic> = JNI.callMember(hashCodeMemberJNI, handle, []);
 
 				if (hashCodeJNI != null)
-					return hashCodeJNI();
+					return hashCodeJNI;
 			}
 		}
 
@@ -306,7 +306,7 @@ class IAPPurchase
 				final toStringJNI:Null<Dynamic> = JNI.callMember(toStringMemberJNI, handle, []);
 
 				if (toStringJNI != null)
-					return toStringJNI();
+					return toStringJNI;
 			}
 		}
 

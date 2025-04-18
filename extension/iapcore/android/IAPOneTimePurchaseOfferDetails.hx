@@ -31,7 +31,7 @@ class IAPOneTimePurchaseOfferDetails
 				final getFormattedPriceJNI:Null<Dynamic> = JNI.callMember(getFormattedPriceMemberJNI, handle, []);
 
 				if (getFormattedPriceJNI != null)
-					return getFormattedPriceJNI();
+					return getFormattedPriceJNI;
 			}
 		}
 
@@ -51,7 +51,7 @@ class IAPOneTimePurchaseOfferDetails
 				final getPriceAmountMicrosJNI:Null<Dynamic> = JNI.callMember(getPriceAmountMicrosMemberJNI, handle, []);
 
 				if (getPriceAmountMicrosJNI != null)
-					return IAPUtil.getFloatFromLong(getPriceAmountMicrosJNI());
+					return IAPUtil.getFloatFromLong(getPriceAmountMicrosJNI);
 			}
 		}
 
@@ -71,7 +71,7 @@ class IAPOneTimePurchaseOfferDetails
 				final getPriceCurrencyCodeJNI:Null<Dynamic> = JNI.callMember(getPriceCurrencyCodeMemberJNI, handle, []);
 
 				if (getPriceCurrencyCodeJNI != null)
-					return getPriceCurrencyCodeJNI();
+					return getPriceCurrencyCodeJNI;
 			}
 		}
 

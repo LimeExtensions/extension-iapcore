@@ -32,7 +32,7 @@ class IAPProductDetails
 				final getNameJNI:Null<Dynamic> = JNI.callMember(getNameMemberJNI, handle, []);
 
 				if (getNameJNI != null)
-					return getNameJNI();
+					return getNameJNI;
 			}
 		}
 
@@ -52,7 +52,7 @@ class IAPProductDetails
 				final getDescriptionJNI:Null<Dynamic> = JNI.callMember(getDescriptionMemberJNI, handle, []);
 
 				if (getDescriptionJNI != null)
-					return getDescriptionJNI();
+					return getDescriptionJNI;
 			}
 		}
 
@@ -87,7 +87,7 @@ class IAPProductDetails
 				final getProductIdJNI:Null<Dynamic> = JNI.callMember(getProductIdMemberJNI, handle, []);
 
 				if (getProductIdJNI != null)
-					return getProductIdJNI();
+					return getProductIdJNI;
 			}
 		}
 
@@ -107,7 +107,7 @@ class IAPProductDetails
 				final getProductTypeJNI:Null<Dynamic> = JNI.callMember(getProductTypeMemberJNI, handle, []);
 
 				if (getProductTypeJNI != null)
-					return getProductTypeJNI();
+					return getProductTypeJNI;
 			}
 		}
 
@@ -127,7 +127,7 @@ class IAPProductDetails
 				final getTitleJNI:Null<Dynamic> = JNI.callMember(getTitleMemberJNI, handle, []);
 
 				if (getTitleJNI != null)
-					return getTitleJNI();
+					return getTitleJNI;
 			}
 		}
 
@@ -146,7 +146,7 @@ class IAPProductDetails
 				final hashCodeJNI:Null<Dynamic> = JNI.callMember(hashCodeMemberJNI, handle, []);
 
 				if (hashCodeJNI != null)
-					return hashCodeJNI();
+					return hashCodeJNI;
 			}
 		}
 
@@ -167,7 +167,7 @@ class IAPProductDetails
 				final toStringJNI:Null<Dynamic> = JNI.callMember(toStringMemberJNI, handle, []);
 
 				if (toStringJNI != null)
-					return toStringJNI();
+					return toStringJNI;
 			}
 		}
 
