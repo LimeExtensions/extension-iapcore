@@ -4,41 +4,37 @@ import extension.iapcore.android.util.JNICache;
 import lime.app.Event;
 
 /**
- * A class for managing in-app purchases on Android using Google Play Billing with JNI.
+ * A class for managing in-app purchases on Android using Google Play Billing.
  */
 class IAPAndroid
 {
-	/** Logs messages for debugging purposes. */
+	/** Event for logging debug messages. */
 	public static final onLog:Event<String->Void> = new Event<String->Void>();
 
-	/** Triggered when the billing setup process is finished. */
+	/** Event triggered when the billing setup is complete. */
 	public static final onBillingSetupFinished:Event<IAPResponseCode->String->Void> = new Event<IAPResponseCode->String->Void>();
 
-	/** Triggered when the billing service is disconnected. */
+	/** Event triggered when the billing service is disconnected. */
 	public static final onBillingServiceDisconnected:Event<Void->Void> = new Event<Void->Void>();
 
-	/** Triggered when product details are received. */
+	/** Event triggered when product details are received. */
 	public static final onProductDetailsResponse:Event<IAPResponseCode->Array<IAPProductDetails>->Void> = new Event<IAPResponseCode->Array<IAPProductDetails>->
 		Void>();
 
-	/** Triggered when purchases are updated. */
+	/** Event triggered when the list of purchases is updated. */
 	public static final onQueryPurchasesResponse:Event<IAPResponseCode->Array<IAPPurchase>->Void> = new Event<IAPResponseCode->Array<IAPPurchase>->Void>();
 
-	/** Triggered when purchases are updated. */
+	/** Event triggered when a purchase is updated. */
 	public static final onPurchasesUpdated:Event<IAPResponseCode->Array<IAPPurchase>->Void> = new Event<IAPResponseCode->Array<IAPPurchase>->Void>();
 
-	/** Triggered when a purchase consumption is completed. */
+	/** Event triggered when a purchase is consumed. */
 	public static final onConsumeResponse:Event<IAPResponseCode->String->Void> = new Event<IAPResponseCode->String->Void>();
 
-	/** Triggered when a purchase acknowledgment is completed. */
+	/** Event triggered when a purchase is acknowledged. */
 	public static final onAcknowledgePurchaseResponse:Event<IAPResponseCode->Void> = new Event<IAPResponseCode->Void>();
 
 	/**
-	 * Initializes the in-app purchase system.
-	 * 
-	 * This function sets up the necessary connections and prepares the system for subsequent operations.
-	 * 
-	 * It should be called before any other in-app purchase operations.
+	 * Initializes the billing system. Call this before using any other methods.
 	 */
 	public static function init():Void
 	{
@@ -50,10 +46,6 @@ class IAPAndroid
 
 	/**
 	 * Starts the connection to the billing service.
-	 * 
-	 * This function establishes a connection to the Google Play Billing service, enabling the app to perform in-app purchase operations.
-	 * 
-	 * It should be called before initiating any purchase flows.
 	 */
 	public static function startConnection():Void
 	{
@@ -64,11 +56,22 @@ class IAPAndroid
 	}
 
 	/**
+	 * Gets the current connection state of the billing service.
+	 * 
+	 * @return The connection state as an IAPConnectionState.
+	 */
+	public static function getConnectionState():IAPConnectionState
+	{
+		final getConnectionStateJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'getConnectionState', '()I');
+
+		if (getConnectionStateJNI != null)
+			return getConnectionStateJNI();
+
+		return IAPConnectionState.DISCONNECTED;
+	}
+
+	/**
 	 * Ends the connection to the billing service.
-	 * 
-	 * This function terminates the connection to the Google Play Billing service.
-	 * 
-	 * It should be called when the app no longer needs to perform in-app purchase operations.
 	 */
 	public static function endConnection():Void
 	{
@@ -79,13 +82,9 @@ class IAPAndroid
 	}
 
 	/**
-	 * Queries product details for a list of product IDs.
+	 * Queries details for a list of products.
 	 * 
-	 * This function retrieves detailed information about the specified products, such as their titles, descriptions, and prices.
-	 * 
-	 * It should be called before initiating a purchase flow for any product.
-	 * 
-	 * @param productIds An array of product IDs to query.
+	 * @param productIds The IDs of the products to query.
 	 */
 	public static function queryProductDetails(productIds:Array<String>):Void
 	{
@@ -96,11 +95,7 @@ class IAPAndroid
 	}
 
 	/**
-	 * Queries existing purchases made by the user.
-	 * 
-	 * This function retrieves the list of purchases that the user has already made and are still owned.
-	 * 
-	 * Useful for restoring purchases or checking entitlement status.
+	 * Queries the list of purchases made by the user.
 	 */
 	public static function queryPurchases():Void
 	{
@@ -111,18 +106,11 @@ class IAPAndroid
 	}
 
 	/**
-	 * Initiates the Google Play Billing purchase flow for a specified product.
-	 *
-	 * @param productDetails The product details to be purchased. Must not be null and must have a valid handle.
-	 * @param isOfferPersonalized Optional. Indicates whether the price is personalized for the user.
-	 *                            Defaults to true. When set to true, and if the app is distributed in the European Union,
-	 *                            the Google Play purchase screen will display a disclosure indicating that the price
-	 *                            has been personalized using automated decision-making, in compliance with
-	 *                            Article 6(1)(ea) of the EU Consumer Rights Directive 2011/83/EU.
-	 *                            If set to false, no such disclosure will be shown.
-	 *                            Refer to the [Android Developers documentation](https://developer.android.com/google/play/billing/integrate) for more details.
-	 *
-	 * @return An IAPResponseCode indicating the result of the operation. Returns DEVELOPER_ERROR if the product details are invalid or if the JNI method is not found.
+	 * Starts the purchase flow for a product.
+	 * 
+	 * @param productDetails The details of the product to purchase.
+	 * @param isOfferPersonalized Whether the price is personalized for the user (default is true).
+	 * @return The result of the operation as an IAPResponseCode.
 	 */
 	public static function launchPurchaseFlow(productDetails:IAPProductDetails, ?isOfferPersonalized:Bool = true):IAPResponseCode
 	{
@@ -139,13 +127,9 @@ class IAPAndroid
 	}
 
 	/**
-	 * Consumes a given purchase.
+	 * Consumes a purchase, making it available for repurchase.
 	 * 
-	 * This function marks an in-app product as consumed, making it available for repurchase.
-	 * 
-	 * It is typically used for consumable products like coins, lives, or other single-use items.
-	 * 
-	 * @param purchase The purchase object to consume.
+	 * @param purchase The purchase to consume.
 	 */
 	public static function consumePurchase(purchase:IAPPurchase):Void
 	{
@@ -160,13 +144,9 @@ class IAPAndroid
 	}
 
 	/**
-	 * Acknowledges a given purchase.
+	 * Acknowledges a purchase to confirm it has been granted to the user.
 	 * 
-	 * This function is used to acknowledge a purchase, confirming that the item has been granted to the user.
-	 * 
-	 * Required for all non-consumable purchases and subscriptions within 3 days, or the purchase is automatically refunded.
-	 * 
-	 * @param purchase The purchase object to acknowledge.
+	 * @param purchase The purchase to acknowledge.
 	 */
 	public static function acknowledgePurchase(purchase:IAPPurchase):Void
 	{

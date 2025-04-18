@@ -4,7 +4,7 @@ import extension.iapcore.android.util.JNICache;
 import lime.system.JNI;
 
 /**
- * Represents the details of a one time or subscription product.
+ * Represents the details of a one time product.
  * 
  * @see https://developer.android.com/reference/com/android/billingclient/api/ProductDetails
  */

@@ -255,25 +255,6 @@ class IAPPurchase
 		return false;
 	}
 
-	/** Indicates whether the subscription renews automatically. */
-	public function isAutoRenewing():Bool
-	{
-		if (handle != null)
-		{
-			final isAutoRenewingMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'isAutoRenewing', '()Z');
-
-			if (isAutoRenewingMemberJNI != null)
-			{
-				final isAutoRenewingJNI:Null<Dynamic> = JNI.callMember(isAutoRenewingMemberJNI, handle, []);
-
-				if (isAutoRenewingJNI != null)
-					return isAutoRenewingJNI;
-			}
-		}
-
-		return false;
-	}
-
 	/** Returns the hash code of the purchase object. */
 	public function hashCode():Int
 	{

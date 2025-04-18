@@ -22,9 +22,9 @@ import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
 
 /**
- * The IAPCore class provides functionality for integrating in-app purchases and subscriptions
- * using the Google Play Billing Library. It includes methods for initializing the billing client,
- * starting the connection, and querying product details for in-app products and subscriptions.
+ * The IAPCore class provides functionality for integrating in-app purchases using the Google Play Billing Library.
+ * 
+ * It includes methods for initializing the billing client, starting the connection, and querying product details for in-app products.
  * 
  * @see https://developer.android.com/google/play/billing/integrate
  */
@@ -82,6 +82,14 @@ public class IAPCore extends Extension
 					haxeObject.call0("onBillingServiceDisconnected");
 			}
 		});
+	}
+
+	public static int getConnectionState()
+	{
+		if (billingClient == null)
+			return BillingClient.ConnectionState.DISCONNECTED;
+
+		return billingClient.getConnectionState();
 	}
 
 	public static void endConnection()
