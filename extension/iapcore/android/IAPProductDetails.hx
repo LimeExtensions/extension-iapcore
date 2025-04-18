@@ -4,11 +4,7 @@ import extension.iapcore.android.util.JNICache;
 import lime.system.JNI;
 
 /**
- * Represents product information retrieved from the Google Play BillingClient API.
- * 
- * This class provides access to details such as the product's ID, name, title, description,
- * product type, and one-time purchase offer details. It acts as a Haxe wrapper for the
- * Android `com.android.billingclient.api.ProductDetails` Java class using JNI.
+ * Represents the details of a one time or subscription product.
  * 
  * @see https://developer.android.com/reference/com/android/billingclient/api/ProductDetails
  */

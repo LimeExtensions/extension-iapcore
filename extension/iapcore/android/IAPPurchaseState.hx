@@ -1,7 +1,9 @@
 package extension.iapcore.android;
 
 /**
- * Represents the states of a purchase.
+ * Possible purchase states.
+ * 
+ * @see https://developer.android.com/reference/com/android/billingclient/api/Purchase.PendingPurchaseUpdate
  */
 enum abstract IAPPurchaseState(Int) from Int to Int
 {

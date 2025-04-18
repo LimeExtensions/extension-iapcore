@@ -1,7 +1,9 @@
 package extension.iapcore.android;
 
 /**
- * Represents response codes returned by Google Play BillingClient API.
+ * Possible response codes.
+ * 
+ * @see https://developer.android.com/reference/com/android/billingclient/api/BillingClient.BillingResponseCode
  */
 enum abstract IAPResponseCode(Int) from Int to Int
 {

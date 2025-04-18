@@ -4,11 +4,7 @@ import extension.iapcore.android.util.JNICache;
 import lime.system.JNI;
 
 /**
- * Provides pricing information for a one-time in-app product purchase.
- *
- * This class wraps the `ProductDetails.OneTimePurchaseOfferDetails` Java object from the
- * Google Play BillingClient API using JNI. It allows access to pricing details such as
- * the formatted price, price in micro-units, and currency code.
+ * Represents the offer details to buy an one-time purchase product.
  * 
  * @see https://developer.android.com/reference/com/android/billingclient/api/ProductDetails.OneTimePurchaseOfferDetails
  */

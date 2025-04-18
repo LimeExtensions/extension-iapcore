@@ -3,6 +3,9 @@ package extension.iapcore.android;
 import extension.iapcore.android.util.JNICache;
 import lime.app.Event;
 
+/**
+ * A class for managing in-app purchases on Android using Google Play Billing with JNI.
+ */
 class IAPAndroid
 {
 	/** Logs messages for debugging purposes. */

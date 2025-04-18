@@ -3,6 +3,11 @@ package extension.iapcore.android;
 import extension.iapcore.android.util.JNICache;
 import lime.system.JNI;
 
+/**
+ * Represents a pending change/update to the existing purchase.
+ * 
+ * @see https://developer.android.com/reference/com/android/billingclient/api/Purchase.PendingPurchaseUpdate
+ */
 class IAPPurchasePendingUpdate
 {
 	@:allow(extension.iapcore.android.IAPPurchase)
@@ -15,7 +20,7 @@ class IAPPurchasePendingUpdate
 	}
 
 	/** Returns the product ids associated with this pending transaction. */
-	public function getProducts():Dynamic
+	public function getProducts():Array<String>
 	{
 		if (handle != null)
 		{
@@ -31,7 +36,7 @@ class IAPPurchasePendingUpdate
 			}
 		}
 
-		return null;
+		return [];
 	}
 
 	/** Returns a token that uniquely identifies this pending transaction. */

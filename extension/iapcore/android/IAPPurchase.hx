@@ -3,6 +3,11 @@ package extension.iapcore.android;
 import extension.iapcore.android.util.JNICache;
 import lime.system.JNI;
 
+/**
+ * Represents an in-app billing purchase.
+ * 
+ * @see https://developer.android.com/reference/com/android/billingclient/api/Purchase
+ */
 class IAPPurchase
 {
 	@:allow(extension.iapcore.android.IAPAndroid)
@@ -115,7 +120,7 @@ class IAPPurchase
 	}
 
 	/** Returns the product Ids. */
-	public function getProducts():Dynamic
+	public function getProducts():Array<String>
 	{
 		if (handle != null)
 		{
@@ -131,7 +136,7 @@ class IAPPurchase
 			}
 		}
 
-		return null;
+		return [];
 	}
 
 	/** Returns one of PurchaseState indicating the state of the purchase. */
