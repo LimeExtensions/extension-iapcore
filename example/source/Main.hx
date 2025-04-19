@@ -1,14 +1,15 @@
 package;
 
-import extension.iapcore.android.IAPPurchaseState;
-import extension.iapcore.android.IAPResult;
-#if android
-import android.widget.Toast;
-#end
 import extension.iapcore.android.IAPAndroid;
 import extension.iapcore.android.IAPProductDetails;
 import extension.iapcore.android.IAPPurchase;
+import extension.iapcore.android.IAPPurchaseState;
 import extension.iapcore.android.IAPResponseCode;
+import extension.iapcore.android.IAPResult;
+
+#if android
+import android.widget.Toast;
+#end
 
 class Main extends lime.app.Application
 {
