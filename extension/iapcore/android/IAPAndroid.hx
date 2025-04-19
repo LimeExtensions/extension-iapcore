@@ -12,26 +12,25 @@ class IAPAndroid
 	public static final onLog:Event<String->Void> = new Event<String->Void>();
 
 	/** Event triggered when the billing setup is complete. */
-	public static final onBillingSetupFinished:Event<IAPResponseCode->String->Void> = new Event<IAPResponseCode->String->Void>();
+	public static final onBillingSetupFinished:Event<IAPResult->Void> = new Event<IAPResult->Void>();
 
 	/** Event triggered when the billing service is disconnected. */
 	public static final onBillingServiceDisconnected:Event<Void->Void> = new Event<Void->Void>();
 
 	/** Event triggered when product details are received. */
-	public static final onProductDetailsResponse:Event<IAPResponseCode->Array<IAPProductDetails>->Void> = new Event<IAPResponseCode->Array<IAPProductDetails>->
-		Void>();
+	public static final onProductDetailsResponse:Event<IAPResult->Array<IAPProductDetails>->Void> = new Event<IAPResult->Array<IAPProductDetails>->Void>();
 
 	/** Event triggered when the list of purchases is updated. */
-	public static final onQueryPurchasesResponse:Event<IAPResponseCode->Array<IAPPurchase>->Void> = new Event<IAPResponseCode->Array<IAPPurchase>->Void>();
+	public static final onQueryPurchasesResponse:Event<IAPResult->Array<IAPPurchase>->Void> = new Event<IAPResult->Array<IAPPurchase>->Void>();
 
 	/** Event triggered when a purchase is updated. */
-	public static final onPurchasesUpdated:Event<IAPResponseCode->Array<IAPPurchase>->Void> = new Event<IAPResponseCode->Array<IAPPurchase>->Void>();
+	public static final onPurchasesUpdated:Event<IAPResult->Array<IAPPurchase>->Void> = new Event<IAPResult->Array<IAPPurchase>->Void>();
 
 	/** Event triggered when a purchase is consumed. */
-	public static final onConsumeResponse:Event<IAPResponseCode->String->Void> = new Event<IAPResponseCode->String->Void>();
+	public static final onConsumeResponse:Event<IAPResult->String->Void> = new Event<IAPResult->String->Void>();
 
 	/** Event triggered when a purchase is acknowledged. */
-	public static final onAcknowledgePurchaseResponse:Event<IAPResponseCode->Void> = new Event<IAPResponseCode->Void>();
+	public static final onAcknowledgePurchaseResponse:Event<IAPResult->Void> = new Event<IAPResult->Void>();
 
 	/**
 	 * Initializes the billing system. Call this before using any other methods.
@@ -110,20 +109,20 @@ class IAPAndroid
 	 * 
 	 * @param productDetails The details of the product to purchase.
 	 * @param isOfferPersonalized Whether the price is personalized for the user (default is true).
-	 * @return The result of the operation as an IAPResponseCode.
+	 * @return The result of the operation as an IAPResult.
 	 */
-	public static function launchPurchaseFlow(productDetails:IAPProductDetails, ?isOfferPersonalized:Bool = true):IAPResponseCode
+	public static function launchPurchaseFlow(productDetails:IAPProductDetails, ?isOfferPersonalized:Bool = true):IAPResult
 	{
 		if (productDetails != null && productDetails.handle != null)
 		{
 			final launchPurchaseFlowJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'launchPurchaseFlow',
-				'(Lcom/android/billingclient/api/ProductDetails;Z)I');
+				'(Lcom/android/billingclient/api/ProductDetails;Z)Lcom/android/billingclient/api/BillingResult;');
 
 			if (launchPurchaseFlowJNI != null)
-				return launchPurchaseFlowJNI(productDetails.handle, isOfferPersonalized);
+				return new IAPResult(launchPurchaseFlowJNI(productDetails.handle, isOfferPersonalized));
 		}
 
-		return IAPResponseCode.DEVELOPER_ERROR;
+		return new IAPResult(null);
 	}
 
 	/**
@@ -180,7 +179,7 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 	#if (lime >= "8.0.0")
 	@:runOnMainThread
 	#end
-	public function onPurchasesUpdated(code:IAPResponseCode, purchases:Dynamic):Void
+	public function onPurchasesUpdated(result:Dynamic, purchases:Dynamic):Void
 	{
 		if (IAPAndroid.onPurchasesUpdated != null)
 		{
@@ -196,7 +195,7 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 				}
 			}
 
-			IAPAndroid.onPurchasesUpdated.dispatch(code, purchasesArray);
+			IAPAndroid.onPurchasesUpdated.dispatch(new IAPResult(result), purchasesArray);
 		}
 	}
 
@@ -204,10 +203,10 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 	#if (lime >= "8.0.0")
 	@:runOnMainThread
 	#end
-	public function onBillingSetupFinished(code:IAPResponseCode, message:String):Void
+	public function onBillingSetupFinished(result:Dynamic):Void
 	{
 		if (IAPAndroid.onBillingSetupFinished != null)
-			IAPAndroid.onBillingSetupFinished.dispatch(code, message);
+			IAPAndroid.onBillingSetupFinished.dispatch(new IAPResult(result));
 	}
 
 	@:keep
@@ -224,7 +223,7 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 	#if (lime >= "8.0.0")
 	@:runOnMainThread
 	#end
-	public function onProductDetailsResponse(code:IAPResponseCode, productDetailsList:Dynamic):Void
+	public function onProductDetailsResponse(result:Dynamic, productDetailsList:Dynamic):Void
 	{
 		if (IAPAndroid.onProductDetailsResponse != null)
 		{
@@ -240,7 +239,7 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 				}
 			}
 
-			IAPAndroid.onProductDetailsResponse.dispatch(code, productDetailsArray);
+			IAPAndroid.onProductDetailsResponse.dispatch(new IAPResult(result), productDetailsArray);
 		}
 	}
 
@@ -248,7 +247,7 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 	#if (lime >= "8.0.0")
 	@:runOnMainThread
 	#end
-	public function onQueryPurchasesResponse(code:IAPResponseCode, purchases:Dynamic):Void
+	public function onQueryPurchasesResponse(result:Dynamic, purchases:Dynamic):Void
 	{
 		if (IAPAndroid.onQueryPurchasesResponse != null)
 		{
@@ -264,7 +263,7 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 				}
 			}
 
-			IAPAndroid.onQueryPurchasesResponse.dispatch(code, purchasesArray);
+			IAPAndroid.onQueryPurchasesResponse.dispatch(new IAPResult(result), purchasesArray);
 		}
 	}
 
@@ -272,19 +271,19 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 	#if (lime >= "8.0.0")
 	@:runOnMainThread
 	#end
-	public function onConsumeResponse(code:IAPResponseCode, purchaseToken:String):Void
+	public function onConsumeResponse(result:Dynamic, purchaseToken:String):Void
 	{
 		if (IAPAndroid.onConsumeResponse != null)
-			IAPAndroid.onConsumeResponse.dispatch(code, purchaseToken);
+			IAPAndroid.onConsumeResponse.dispatch(new IAPResult(result), purchaseToken);
 	}
 
 	@:keep
 	#if (lime >= "8.0.0")
 	@:runOnMainThread
 	#end
-	public function onAcknowledgePurchaseResponse(code:IAPResponseCode):Void
+	public function onAcknowledgePurchaseResponse(result:Dynamic):Void
 	{
 		if (IAPAndroid.onAcknowledgePurchaseResponse != null)
-			IAPAndroid.onAcknowledgePurchaseResponse.dispatch(code);
+			IAPAndroid.onAcknowledgePurchaseResponse.dispatch(new IAPResult(result));
 	}
 }

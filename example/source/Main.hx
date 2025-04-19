@@ -1,5 +1,6 @@
 package;
 
+import extension.iapcore.android.IAPResult;
 #if android
 import android.widget.Toast;
 #end
@@ -19,14 +20,11 @@ class Main extends lime.app.Application
 			logMessage(message);
 		});
 
-		IAPAndroid.onBillingSetupFinished.add(function(code:IAPResponseCode, message:String):Void
+		IAPAndroid.onBillingSetupFinished.add(function(result:IAPResult):Void
 		{
-			if (message != null && message.length > 0)
-				logMessage('Setup finished with code "$code" "$message"!');
-			else
-				logMessage('Setup finished with code "$code"!');
+			logMessage('Billing setup finished "$result"!');
 
-			if (code == IAPResponseCode.OK)
+			if (result.getResponseCode() == IAPResponseCode.OK)
 			{
 				IAPAndroid.queryPurchases();
 				IAPAndroid.queryProductDetails(['test_product_1']);
@@ -38,19 +36,19 @@ class Main extends lime.app.Application
 			logMessage("Billing service disconnected!");
 		});
 
-		IAPAndroid.onProductDetailsResponse.add(function(code:IAPResponseCode, productDetails:Array<IAPProductDetails>):Void
+		IAPAndroid.onProductDetailsResponse.add(function(result:IAPResult, productDetails:Array<IAPProductDetails>):Void
 		{
-			logMessage('Product details responded with code "$code", $productDetails');
+			logMessage('Product details response "$result", $productDetails');
 		});
 
-		IAPAndroid.onQueryPurchasesResponse.add(function(code:IAPResponseCode, purchases:Array<IAPPurchase>):Void
+		IAPAndroid.onQueryPurchasesResponse.add(function(result:IAPResult, purchases:Array<IAPPurchase>):Void
 		{
-			logMessage('Query purchases responded with code "$code", $purchases');
+			logMessage('Query purchases response "$result", $purchases');
 		});
 
-		IAPAndroid.onPurchasesUpdated.add(function(code:IAPResponseCode, purchases:Array<IAPPurchase>):Void
+		IAPAndroid.onPurchasesUpdated.add(function(result:IAPResult, purchases:Array<IAPPurchase>):Void
 		{
-			logMessage('Purchases updated response with code "$code", $purchases');
+			logMessage('Purchases updated response "$result", $purchases');
 		});
 	}
 

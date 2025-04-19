@@ -33,6 +33,9 @@ class JNICache
 	 */
 	public static function createStaticMethod(className:String, methodName:String, signature:String, cache:Bool = true):Null<Dynamic>
 	{
+		@:privateAccess
+		className = JNI.transformClassName(className);
+
 		final key:String = '$className::$methodName::$signature';
 
 		if (cache && !staticMethodCache.exists(key))
@@ -54,6 +57,9 @@ class JNICache
 	 */
 	public static function createMemberMethod(className:String, methodName:String, signature:String, cache:Bool = true):Null<Dynamic>
 	{
+		@:privateAccess
+		className = JNI.transformClassName(className);
+
 		final key:String = '$className::$methodName::$signature';
 
 		if (cache && !memberMethodCache.exists(key))
@@ -75,6 +81,9 @@ class JNICache
 	 */
 	public static function createStaticField(className:String, fieldName:String, signature:String, cache:Bool = true):Null<JNIStaticField>
 	{
+		@:privateAccess
+		className = JNI.transformClassName(className);
+
 		final key:String = '$className::$fieldName::$signature';
 
 		if (cache && !staticFieldCache.exists(key))
@@ -96,6 +105,9 @@ class JNICache
 	 */
 	public static function createMemberField(className:String, fieldName:String, signature:String, cache:Bool = true):Null<JNIMemberField>
 	{
+		@:privateAccess
+		className = JNI.transformClassName(className);
+
 		final key:String = '$className::$fieldName::$signature';
 
 		if (cache && !memberFieldCache.exists(key))

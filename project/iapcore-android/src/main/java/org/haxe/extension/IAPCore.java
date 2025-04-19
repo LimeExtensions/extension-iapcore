@@ -45,7 +45,7 @@ public class IAPCore extends Extension
 				public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> purchases)
 				{
 					if (haxeObject != null)
-						haxeObject.call2("onPurchasesUpdated", billingResult.getResponseCode(), purchases != null ? purchases.toArray(new Purchase[0]) : new Purchase[0]);
+						haxeObject.call2("onPurchasesUpdated", billingResult, purchases != null ? purchases.toArray(new Purchase[0]) : new Purchase[0]);
 				}
 			};
 
@@ -72,7 +72,7 @@ public class IAPCore extends Extension
 			public void onBillingSetupFinished(BillingResult billingResult)
 			{
 				if (haxeObject != null)
-					haxeObject.call2("onBillingSetupFinished", billingResult.getResponseCode(), billingResult.getDebugMessage());
+					haxeObject.call1("onBillingSetupFinished", billingResult);
 			}
 
 			@Override
@@ -119,7 +119,7 @@ public class IAPCore extends Extension
 			public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList)
 			{
 				if (haxeObject != null)
-					haxeObject.call2("onProductDetailsResponse", billingResult.getResponseCode(), productDetailsList != null ? productDetailsList.toArray(new ProductDetails[0]) : new ProductDetails[0]);
+					haxeObject.call2("onProductDetailsResponse", billingResult, productDetailsList != null ? productDetailsList.toArray(new ProductDetails[0]) : new ProductDetails[0]);
 			}
 		});
 	}
@@ -140,19 +140,19 @@ public class IAPCore extends Extension
 			public void onQueryPurchasesResponse(BillingResult billingResult, List<Purchase> purchases)
 			{
 				if (haxeObject != null)
-					haxeObject.call2("onQueryPurchasesResponse", billingResult.getResponseCode(), purchases != null ? purchases.toArray(new Purchase[0]) : new Purchase[0]);
+					haxeObject.call2("onQueryPurchasesResponse", billingResult, purchases != null ? purchases.toArray(new Purchase[0]) : new Purchase[0]);
 			}
 		});
 	}
 
-	public static int launchPurchaseFlow(final ProductDetails productDetails, final boolean isOfferPersonalized)
+	public static BillingResult launchPurchaseFlow(final ProductDetails productDetails, final boolean isOfferPersonalized)
 	{
 		if (billingClient == null || !billingClient.isReady())
 		{
 			if (haxeObject != null)
 				haxeObject.call1("onLog", "Connection isnt ready or initialized!");
 
-			return BillingClient.BillingResponseCode.DEVELOPER_ERROR;
+			return BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.DEVELOPER_ERROR).build();
 		}
 
 		BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
@@ -160,7 +160,7 @@ public class IAPCore extends Extension
 				.setProductDetailsParamsList(List.of(BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).build()))
 				.build();
 
-		return billingClient.launchBillingFlow(mainActivity, billingFlowParams).getResponseCode();
+		return billingClient.launchBillingFlow(mainActivity, billingFlowParams);
 	}
 
 	public static void consumePurchase(final Purchase purchase)
@@ -179,7 +179,7 @@ public class IAPCore extends Extension
 			public void onConsumeResponse(BillingResult billingResult, String purchaseToken)
 			{
 				if (haxeObject != null)
-					haxeObject.call2("onConsumeResponse", billingResult.getResponseCode(), purchaseToken);
+					haxeObject.call2("onConsumeResponse", billingResult, purchaseToken);
 			}
 		});
 	}
@@ -200,7 +200,7 @@ public class IAPCore extends Extension
 			public void onAcknowledgePurchaseResponse(BillingResult billingResult)
 			{
 				if (haxeObject != null)
-					haxeObject.call1("onAcknowledgePurchaseResponse", billingResult.getResponseCode());
+					haxeObject.call1("onAcknowledgePurchaseResponse", billingResult);
 			}
 		});
 	}
