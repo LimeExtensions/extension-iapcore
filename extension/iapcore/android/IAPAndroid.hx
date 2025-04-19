@@ -128,35 +128,27 @@ class IAPAndroid
 	/**
 	 * Consumes a purchase, making it available for repurchase.
 	 * 
-	 * @param purchase The purchase to consume.
+	 * @param purchaseToken The token that identifies the purchase to be consumed.
 	 */
-	public static function consumePurchase(purchase:IAPPurchase):Void
+	public static function consumePurchase(purchaseToken:String):Void
 	{
-		if (purchase != null && purchase.handle != null)
-		{
-			final consumePurchaseJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'consumePurchase',
-				'(Lcom/android/billingclient/api/Purchase;)V');
+		final consumePurchaseJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'consumePurchase', '(Ljava/lang/String;)V');
 
-			if (consumePurchaseJNI != null)
-				consumePurchaseJNI(purchase.handle);
-		}
+		if (consumePurchaseJNI != null)
+			consumePurchaseJNI(purchaseToken);
 	}
 
 	/**
 	 * Acknowledges a purchase to confirm it has been granted to the user.
 	 * 
-	 * @param purchase The purchase to acknowledge.
+	 * @param purchaseToken The token that identifies the purchase to be acknowledged.
 	 */
-	public static function acknowledgePurchase(purchase:IAPPurchase):Void
+	public static function acknowledgePurchase(purchaseToken:String):Void
 	{
-		if (purchase != null && purchase.handle != null)
-		{
-			final acknowledgePurchaseJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'acknowledgePurchase',
-				'(Lcom/android/billingclient/api/Purchase;)V');
+		final acknowledgePurchaseJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'acknowledgePurchase', '(Ljava/lang/String;)V');
 
-			if (acknowledgePurchaseJNI != null)
-				acknowledgePurchaseJNI(purchase.handle);
-		}
+		if (acknowledgePurchaseJNI != null)
+			acknowledgePurchaseJNI(purchaseToken);
 	}
 }
 

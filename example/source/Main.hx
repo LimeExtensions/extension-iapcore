@@ -1,5 +1,6 @@
 package;
 
+import extension.iapcore.android.IAPPurchaseState;
 import extension.iapcore.android.IAPResult;
 #if android
 import android.widget.Toast;
@@ -41,14 +42,44 @@ class Main extends lime.app.Application
 			logMessage('Product details response "$result", $productDetails');
 		});
 
+		function handlePurchases(purchases:Array<IAPPurchase>):Void
+		{
+			for (purchase in purchases)
+			{
+				if (purchase.getPurchaseState() == IAPPurchaseState.PURCHASED)
+				{
+					if (!purchase.isAcknowledged())
+						IAPAndroid.acknowledgePurchase(purchase.getPurchaseToken());
+					else
+						logMessage('Already acknowledged: ${purchase.getPurchaseToken()}');
+				}
+				else
+					logMessage('Purchase not completed: ${purchase.getPurchaseState()}');
+			}
+		}
+
 		IAPAndroid.onQueryPurchasesResponse.add(function(result:IAPResult, purchases:Array<IAPPurchase>):Void
 		{
 			logMessage('Query purchases response "$result", $purchases');
+
+			if (result.getResponseCode() == IAPResponseCode.OK)
+				handlePurchases(purchases);
 		});
 
 		IAPAndroid.onPurchasesUpdated.add(function(result:IAPResult, purchases:Array<IAPPurchase>):Void
 		{
 			logMessage('Purchases updated response "$result", $purchases');
+
+			if (result.getResponseCode() == IAPResponseCode.OK)
+				handlePurchases(purchases);
+		});
+
+		IAPAndroid.onAcknowledgePurchaseResponse.add(function(result:IAPResult):Void
+		{
+			if (result.getResponseCode() == IAPResponseCode.OK)
+				logMessage("Purchase acknowledged successfully!");
+			else
+				logMessage("Failed to acknowledge purchase: $result");
 		});
 	}
 

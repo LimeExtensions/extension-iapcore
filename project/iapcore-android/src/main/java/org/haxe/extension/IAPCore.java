@@ -163,7 +163,7 @@ public class IAPCore extends Extension
 		return billingClient.launchBillingFlow(mainActivity, billingFlowParams);
 	}
 
-	public static void consumePurchase(final Purchase purchase)
+	public static void consumePurchase(final String purchaseToken)
 	{
 		if (billingClient == null || !billingClient.isReady())
 		{
@@ -173,7 +173,7 @@ public class IAPCore extends Extension
 			return;
 		}
 
-		billingClient.consumeAsync(ConsumeParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build(), new ConsumeResponseListener()
+		billingClient.consumeAsync(ConsumeParams.newBuilder().setPurchaseToken(purchaseToken).build(), new ConsumeResponseListener()
 		{
 			@Override
 			public void onConsumeResponse(BillingResult billingResult, String purchaseToken)
@@ -184,7 +184,7 @@ public class IAPCore extends Extension
 		});
 	}
 
-	public static void acknowledgePurchase(final Purchase purchase)
+	public static void acknowledgePurchase(final String purchaseToken)
 	{
 		if (billingClient == null || !billingClient.isReady())
 		{
@@ -194,7 +194,7 @@ public class IAPCore extends Extension
 			return;
 		}
 
-		billingClient.acknowledgePurchase(AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build(), new AcknowledgePurchaseResponseListener()
+		billingClient.acknowledgePurchase(AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchaseToken).build(), new AcknowledgePurchaseResponseListener()
 		{
 			@Override
 			public void onAcknowledgePurchaseResponse(BillingResult billingResult)
