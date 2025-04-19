@@ -18,4 +18,10 @@
 	<haxelib name="extension-iapcore" />
 
 	<haxeflag name="-dce" value="full" />
+
+	<section if="cpp">
+		<haxedef name="HXCPP_CHECK_POINTER" />
+		<haxedef name="HXCPP_STACK_LINE" />
+		<haxedef name="HXCPP_STACK_TRACE" />
+	</section>
 </project>

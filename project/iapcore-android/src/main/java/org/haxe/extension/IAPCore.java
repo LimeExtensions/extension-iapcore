@@ -50,9 +50,9 @@ public class IAPCore extends Extension
 			};
 
 			billingClient = BillingClient.newBuilder(mainContext)
-					.enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
-					.setListener(purchasesUpdatedListener)
-					.build();
+				.enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
+				.setListener(purchasesUpdatedListener)
+				.build();
 		}
 		catch (Exception e)
 		{
@@ -156,9 +156,9 @@ public class IAPCore extends Extension
 		}
 
 		BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
-				.setIsOfferPersonalized(isOfferPersonalized)
-				.setProductDetailsParamsList(List.of(BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).build()))
-				.build();
+			.setIsOfferPersonalized(isOfferPersonalized)
+			.setProductDetailsParamsList(List.of(BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).build()))
+			.build();
 
 		return billingClient.launchBillingFlow(mainActivity, billingFlowParams);
 	}
