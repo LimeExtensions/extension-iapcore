@@ -17,7 +17,7 @@ A Haxe/[Lime](https://lime.openfl.org) extension that implements In-App Purchase
 You can install it through `Git`
 
 ```bash
-haxelib git extension-haptics https://github.com/MAJigsaw77/extension-haptics.git
+haxelib git extension-iapcore https://github.com/MAJigsaw77/extension-iapcore.git
 ```
 
 ## Licensing
