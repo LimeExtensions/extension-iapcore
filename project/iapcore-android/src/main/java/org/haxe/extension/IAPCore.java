@@ -39,7 +39,11 @@ public class IAPCore extends Extension
 
 		try
 		{
-			PurchasesUpdatedListener purchasesUpdatedListener = new PurchasesUpdatedListener()
+			BillingClient.Builder builder = BillingClient.newBuilder(mainContext);
+
+			builder.enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build());
+
+			builder.setListener(new PurchasesUpdatedListener()
 			{
 				@Override
 				public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> purchases)
@@ -47,24 +51,26 @@ public class IAPCore extends Extension
 					if (haxeObject != null)
 						haxeObject.call2("onPurchasesUpdated", billingResult, purchases != null ? purchases.toArray(new Purchase[0]) : new Purchase[0]);
 				}
-			};
+			});
 
-			billingClient = BillingClient.newBuilder(mainContext)
-				.enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
-				.setListener(purchasesUpdatedListener)
-				.build();
+			billingClient = builder.build();
 		}
 		catch (Exception e)
 		{
 			if (haxeObject != null)
-				haxeObject.call1("onLog", e.getMessage());
+				haxeObject.call1("onLog", e.toString());
 		}
 	}
 
 	public static void startConnection()
 	{
 		if (billingClient == null)
+		{
+			if (haxeObject != null)
+				haxeObject.call1("onLog", "Billing client is not initialized!");
+
 			return;
+		}
 
 		billingClient.startConnection(new BillingClientStateListener()
 		{
@@ -87,7 +93,12 @@ public class IAPCore extends Extension
 	public static int getConnectionState()
 	{
 		if (billingClient == null)
+		{
+			if (haxeObject != null)
+				haxeObject.call1("onLog", "Billing client is not initialized!");
+
 			return BillingClient.ConnectionState.DISCONNECTED;
+		}
 
 		return billingClient.getConnectionState();
 	}
@@ -103,7 +114,7 @@ public class IAPCore extends Extension
 		if (billingClient == null || !billingClient.isReady())
 		{
 			if (haxeObject != null)
-				haxeObject.call1("onLog", "Connection isnt ready or initialized!");
+				haxeObject.call1("onLog", "Billing connection isn't ready or initialized!");
 
 			return;
 		}
@@ -129,7 +140,7 @@ public class IAPCore extends Extension
 		if (billingClient == null || !billingClient.isReady())
 		{
 			if (haxeObject != null)
-				haxeObject.call1("onLog", "Connection isn't ready or initialized!");
+				haxeObject.call1("onLog", "Billing connection isn't ready or initialized!");
 
 			return;
 		}
@@ -150,7 +161,7 @@ public class IAPCore extends Extension
 		if (billingClient == null || !billingClient.isReady())
 		{
 			if (haxeObject != null)
-				haxeObject.call1("onLog", "Connection isnt ready or initialized!");
+				haxeObject.call1("onLog", "Billing connection isn't ready or initialized!");
 
 			return BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.DEVELOPER_ERROR).build();
 		}
@@ -168,7 +179,7 @@ public class IAPCore extends Extension
 		if (billingClient == null || !billingClient.isReady())
 		{
 			if (haxeObject != null)
-				haxeObject.call1("onLog", "Connection isn't ready or initialized!");
+				haxeObject.call1("onLog", "Billing connection isn't ready or initialized!");
 
 			return;
 		}
@@ -189,7 +200,7 @@ public class IAPCore extends Extension
 		if (billingClient == null || !billingClient.isReady())
 		{
 			if (haxeObject != null)
-				haxeObject.call1("onLog", "Connection isn't ready or initialized!");
+				haxeObject.call1("onLog", "Billing connection isn't ready or initialized!");
 
 			return;
 		}

@@ -4,9 +4,22 @@
 
 A Haxe/[Lime](https://lime.openfl.org) extension that implements In-App Purchases (IAP) functionality for Android and iOS devices.
 
-## Status
+> [!WARNING]
+> The library is still a **Work in Progress** and till is finished, it won't be published to `Haxelib`.
 
-This library is currently a **Work in Progress** and has not yet been published to `haxelib`.
+### Supported Platforms
 
-- [x] Android implementation (partially tested)  
-- [ ] iOS implementation (not yet available)
+- **Android** using [Google Play Billing](https://developer.android.com/distribute/play-billing) (**Curently implemented**).
+- **iOS** using [StoreKit](https://developer.apple.com/documentation/storekit?language=objc) (**Not yet implemented**).
+
+### Installation
+
+You can install it through `Git`
+
+```bash
+haxelib git extension-haptics https://github.com/MAJigsaw77/extension-haptics.git
+```
+
+## Licensing
+
+**extension-haptics** is made available under the **MIT License**. Check [LICENSE](./LICENSE) for more information.
