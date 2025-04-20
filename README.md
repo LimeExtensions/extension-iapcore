@@ -22,4 +22,4 @@ haxelib git extension-iapcore https://github.com/MAJigsaw77/extension-iapcore.gi
 
 ## Licensing
 
-**extension-haptics** is made available under the **MIT License**. Check [LICENSE](./LICENSE) for more information.
+**extension-iapcore** is made available under the **MIT License**. Check [LICENSE](./LICENSE) for more information.
