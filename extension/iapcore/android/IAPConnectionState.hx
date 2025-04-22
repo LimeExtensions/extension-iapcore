@@ -1,5 +1,6 @@
 package extension.iapcore.android;
 
+#if android
 /**
  * Connection state of billing client.
  * 
@@ -27,3 +28,4 @@ enum abstract IAPConnectionState(Int) from Int to Int
 	 */
 	final DISCONNECTED = 0;
 }
+#end

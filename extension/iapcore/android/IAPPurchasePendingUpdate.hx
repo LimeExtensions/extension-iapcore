@@ -1,5 +1,6 @@
 package extension.iapcore.android;
 
+#if android
 import extension.iapcore.android.util.JNICache;
 import lime.system.JNI;
 
@@ -59,3 +60,4 @@ class IAPPurchasePendingUpdate
 		return '';
 	}
 }
+#end
