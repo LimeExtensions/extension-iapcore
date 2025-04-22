@@ -9,4 +9,6 @@
 
 		<config:android extension="org.haxe.extension.IAPCore" />
 	</section>
+
+	<dependency name="StoreKit.framework" if="ios || tvos" />
 </extension>
