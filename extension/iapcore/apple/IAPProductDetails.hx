@@ -1,6 +1,6 @@
 package extension.iapcore.apple;
 
-#if (cpp && (ios || tvos))
+#if (ios || tvos)
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
 @:headerInclude('iap.hpp')
 class IAPProductDetails

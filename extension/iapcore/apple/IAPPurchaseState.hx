@@ -1,6 +1,6 @@
 package extension.iapcore.apple;
 
-#if (cpp && (ios || tvos))
+#if (ios || tvos)
 enum abstract IAPPurchaseState(Int) from Int to Int
 {
 	final PURCHASING = 0;

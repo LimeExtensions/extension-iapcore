@@ -82,8 +82,25 @@ void IAP_PurchaseProduct(IAPProduct* product)
 {
 	if (product && product->product)
 	{
+		[[SKPaymentQueue defaultQueue] addPayment:[SKPayment paymentWithProduct:product->product]];
+	}
+}
+
+void IAP_PurchaseProduct(IAPProduct* product, bool simulateAskToBuy)
+{
+	if (product && product->product)
+	{
 		SKPayment* payment = [SKPayment paymentWithProduct:product->product];
+		payment.simulatesAskToBuyInSandbox = simulateAskToBuy ? YES : NO;
 		[[SKPaymentQueue defaultQueue] addPayment:payment];
+	}
+}
+
+void IAP_FinishTransaction(IAPTransaction* transaction)
+{
+	if (transaction && transaction->transaction)
+	{
+		[[SKPaymentQueue defaultQueue] finishTransaction:transaction->transaction];
 	}
 }
 

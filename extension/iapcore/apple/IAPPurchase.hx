@@ -1,6 +1,6 @@
 package extension.iapcore.apple;
 
-#if (cpp && (ios || tvos))
+#if (ios || tvos)
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
 @:headerInclude('iap.hpp')
 class IAPPurchase
@@ -40,6 +40,22 @@ class IAPPurchase
 		return IAPPurchaseState.FAILED;
 	}
 
+	public function getPaymentProductIdentifier():String
+	{
+		if (handle != null && handle.raw != null)
+			return getTransactionPaymentProductIdentifierIAP(handle.raw);
+
+		return '';
+	}
+
+	public function getPaymentQuantity():IAPPurchaseState
+	{
+		if (handle != null && handle.raw != null)
+			return getTransactionPaymentQuantityIAP(handle.raw);
+
+		return -1;
+	}
+
 	public function release():Void
 	{
 		if (handle != null && handle.raw != null)
@@ -59,6 +75,12 @@ class IAPPurchase
 
 	@:native('IAP_GetTransactionState')
 	extern public static function getTransactionStateIAP(transaction:cpp.RawPointer<IAPTransaction>):Int;
+
+	@:native('IAP_GetTransactionPaymentProductIdentifier')
+	extern public static function getTransactionPaymentProductIdentifierIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
+
+	@:native('IAP_GetTransactionPaymentQuantity')
+	extern public static function getTransactionPaymentQuantityIAP(transaction:cpp.RawPointer<IAPTransaction>):Int;
 
 	@:native('IAP_ReleaseTransaction')
 	extern public static function releaseTransactionIAP(transaction:cpp.RawPointer<IAPTransaction>):Void;

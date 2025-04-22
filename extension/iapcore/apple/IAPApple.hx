@@ -1,6 +1,6 @@
 package extension.iapcore.apple;
 
-#if (cpp && (ios || tvos))
+#if (ios || tvos)
 import extension.iapcore.apple.IAPProductDetails;
 import extension.iapcore.apple.IAPPurchase;
 import haxe.MainLoop;
@@ -30,10 +30,16 @@ class IAPApple
 		untyped __cpp__('delete[] {0}', ptr);
 	}
 
-	public static function purchaseProduct(product:IAPProductDetails):Void
+	public static function purchaseProduct(product:IAPProductDetails, ?simulateAskToBuy:Bool = false):Void
 	{
 		if (product != null && product.handle != null && product.handle.raw != null)
-			purchaseProductIAP(product.handle.raw);
+			purchaseProductIAP(product.handle.raw, simulateAskToBuy);
+	}
+
+	public static function finishPurchase(purchase:IAPPurchase):Void
+	{
+		if (purchase != null && purchase.handle != null && purchase.handle.raw != null)
+			finishTransactionIAP(purchase.handle.raw);
 	}
 
 	public static function restorePurchases():Void
@@ -77,7 +83,10 @@ class IAPApple
 	extern public static function requestProductsIAP(productIdentifiers:cpp.RawPointer<cpp.ConstCharStar>, count:Int):Void;
 
 	@:native('IAP_PurchaseProduct')
-	extern public static function purchaseProductIAP(product:cpp.RawPointer<IAPProduct>):Void;
+	extern public static function purchaseProductIAP(product:cpp.RawPointer<IAPProduct>, simulateAskToBuy:Bool):Void;
+
+	@:native('IAP_FinishTransaction')
+	extern public static function finishTransactionIAP(transaction:cpp.RawPointer<IAPTransaction>):Void;
 
 	@:native('IAP_RestorePurchases')
 	extern public static function restorePurchasesIAP():Void;
