@@ -1,5 +1,6 @@
 package extension.iapcore.android;
 
+#if android
 import extension.iapcore.android.util.JNICache;
 
 /**
@@ -46,3 +47,4 @@ class IAPUtil
 		return [];
 	}
 }
+#end

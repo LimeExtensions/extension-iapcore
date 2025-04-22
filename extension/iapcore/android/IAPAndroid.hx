@@ -1,5 +1,6 @@
 package extension.iapcore.android;
 
+#if android
 import extension.iapcore.android.util.JNICache;
 import lime.app.Event;
 
@@ -279,3 +280,4 @@ private class IAPAndroidCallbackObject #if (lime >= "8.0.0") implements lime.sys
 			IAPAndroid.onAcknowledgePurchaseResponse.dispatch(new IAPResult(result));
 	}
 }
+#end

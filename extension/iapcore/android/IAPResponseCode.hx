@@ -1,5 +1,6 @@
 package extension.iapcore.android;
 
+#if android
 /**
  * Possible response codes.
  * 
@@ -67,3 +68,4 @@ enum abstract IAPResponseCode(Int) from Int to Int
 	 */
 	final SERVICE_DISCONNECTED = -1;
 }
+#end

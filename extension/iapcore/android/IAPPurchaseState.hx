@@ -1,5 +1,6 @@
 package extension.iapcore.android;
 
+#if android
 /**
  * Possible purchase states.
  * 
@@ -22,3 +23,4 @@ enum abstract IAPPurchaseState(Int) from Int to Int
      */
     final UNSPECIFIED_STATE = 0;
 }
+#end
