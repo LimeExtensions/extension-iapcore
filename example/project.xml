@@ -14,7 +14,7 @@
 
 	<haxelib name="lime" />
 
-	<haxelib name="extension-androidtools" />
+	<haxelib name="extension-androidtools" if="android" />
 	<haxelib name="extension-iapcore" />
 
 	<haxeflag name="-dce" value="full" />
