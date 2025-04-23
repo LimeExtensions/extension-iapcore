@@ -48,7 +48,7 @@ class IAPApple
 	 * 
 	 * @see https://developer.apple.com/documentation/storekit/skpayment/simulatesasktobuyinsandbox?language=objc
 	 */
-	public static function purchaseProduct(product:IAPProductDetails, ?simulateAskToBuy:Bool = false):Void
+	public static function purchaseProduct(product:IAPProductDetails, simulateAskToBuy:Bool = false):Void
 	{
 		if (product != null && product.handle != null && product.handle.raw != null)
 			purchaseProductIAP(product.handle.raw, simulateAskToBuy);
