@@ -57,54 +57,60 @@ void IAP_Init(OnProductsReceived onProductsReceived, OnTransactionsUpdated onTra
 	gOnProductsReceived = onProductsReceived;
 	gOnTransactionsUpdated = onTransactionsUpdated;
 
-	if (!iapDelegate)
+	dispatch_async(dispatch_get_main_queue(), ^
 	{
-		iapDelegate = [IAPDelegate new];
-		[[SKPaymentQueue defaultQueue] addTransactionObserver:iapDelegate];
-	}
+		if (!iapDelegate)
+		{
+			iapDelegate = [IAPDelegate new];
+
+			[[SKPaymentQueue defaultQueue] addTransactionObserver:iapDelegate];
+		}
+	});
 }
 
 void IAP_RequestProducts(const char** productIdentifiers, int count)
 {
-	NSMutableSet* ids = [NSMutableSet set];
-
-	for (int i = 0; i < count; ++i)
+	dispatch_async(dispatch_get_main_queue(), ^
 	{
-		[ids addObject:[NSString stringWithUTF8String:productIdentifiers[i]]];
-	}
+		NSMutableSet* ids = [NSMutableSet set];
 
-	SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:ids];
-	request.delegate = iapDelegate;
-	[request start];
-}
+		for (int i = 0; i < count; ++i)
+			[ids addObject:[NSString stringWithUTF8String:productIdentifiers[i]]];
 
-void IAP_PurchaseProduct(IAPProduct* product)
-{
-	if (product && product->product)
-	{
-		[[SKPaymentQueue defaultQueue] addPayment:[SKPayment paymentWithProduct:product->product]];
-	}
+		SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:ids];
+		request.delegate = iapDelegate;
+		[request start];
+	});
 }
 
 void IAP_PurchaseProduct(IAPProduct* product, bool simulateAskToBuy)
 {
-	if (product && product->product)
+	dispatch_async(dispatch_get_main_queue(), ^
 	{
-		SKPayment* payment = [SKPayment paymentWithProduct:product->product];
-		payment.simulatesAskToBuyInSandbox = simulateAskToBuy ? YES : NO;
-		[[SKPaymentQueue defaultQueue] addPayment:payment];
-	}
+		if (product && product->product)
+		{
+			SKMutablePayment* payment = [SKMutablePayment paymentWithProduct:product->product];
+			payment.simulatesAskToBuyInSandbox = simulateAskToBuy ? YES : NO;
+			[[SKPaymentQueue defaultQueue] addPayment:payment];
+		}
+	});
 }
 
 void IAP_FinishTransaction(IAPTransaction* transaction)
 {
-	if (transaction && transaction->transaction)
+	dispatch_async(dispatch_get_main_queue(), ^
 	{
-		[[SKPaymentQueue defaultQueue] finishTransaction:transaction->transaction];
-	}
+		if (transaction && transaction->transaction)
+		{
+			[[SKPaymentQueue defaultQueue] finishTransaction:transaction->transaction];
+		}
+	});
 }
 
 void IAP_RestorePurchases(void)
 {
-	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+	dispatch_async(dispatch_get_main_queue(), ^
+	{
+		[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+	});
 }

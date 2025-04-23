@@ -14,7 +14,7 @@ const char* IAP_GetTransactionIdentifier(IAPTransaction* transaction)
 
 const char* IAP_GetTransactionDate(IAPTransaction* transaction)
 {
-    if (transaction && transaction->transaction.transactionDate)
+	if (transaction && transaction->transaction.transactionDate)
 	{
 		NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
 		formatter.dateStyle = NSDateFormatterMediumStyle;
@@ -45,7 +45,6 @@ void IAP_ReleaseTransaction(IAPTransaction* transaction)
 	if (transaction)
 	{
 		[transaction->transaction release];
-
 		delete transaction;
 	}
 }

@@ -40,7 +40,6 @@ void IAP_ReleaseProduct(IAPProduct* product)
 	if (product)
 	{
 		[product->product release];
-
 		delete product;
 	}
 }
