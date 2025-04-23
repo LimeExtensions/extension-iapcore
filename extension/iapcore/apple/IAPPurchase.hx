@@ -17,6 +17,8 @@ class IAPPurchase
 	private function new(handle:cpp.Pointer<IAPTransaction>):Void
 	{
 		this.handle = handle;
+
+		cpp.vm.Gc.setFinalizer(this, cpp.Function.fromStaticFunction(finalize));
 	}
 
 	/** Returns the transaction identifier. */
@@ -69,6 +71,11 @@ class IAPPurchase
 	{
 		if (handle != null && handle.raw != null)
 			releaseTransactionIAP(handle.raw);
+	}
+
+	private static function finalize(purchase:IAPPurchase):Void
+	{
+		purchase.release();
 	}
 
 	@:native('IAP_GetTransactionIdentifier')
