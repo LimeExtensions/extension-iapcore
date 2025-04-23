@@ -44,7 +44,9 @@ class IAPApple
 	 * @param product The product to purchase.
 	 * @param simulateAskToBuy If true, simulates the "Ask to Buy" flow in the sandbox environment.
 	 * 
-	 * @note The simulatesAskToBuyInSandbox property, when set to YES, produces an "Ask to Buy" flow for this payment in the sandbox. This is useful for testing how your app handles transactions that require parental approval. Note that this simulation only works in the sandbox and requires appropriate test account configurations.
+	 * The `simulatesAskToBuyInSandbox` property, when set to YES, produces an "Ask to Buy" flow for this payment in the sandbox.
+	 * This is useful for testing how your app handles transactions that require parental approval.
+	 * Note that this simulation only works in the sandbox and requires appropriate test account configurations.
 	 * 
 	 * @see https://developer.apple.com/documentation/storekit/skpayment/simulatesasktobuyinsandbox?language=objc
 	 */

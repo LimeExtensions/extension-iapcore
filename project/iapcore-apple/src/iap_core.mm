@@ -1,4 +1,6 @@
 #import "iap_core.hpp"
+#import "iap_product.hpp"
+#import "iap_transaction.hpp"
 
 #import <StoreKit/StoreKit.h>
 
@@ -19,7 +21,7 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 		for (int i = 0; i < response.products.count; ++i)
 		{
 			IAPProduct* p = new IAPProduct();
-			p->product = [response.products[i] retain];
+			p->product = response.products[i];
 			wrapped[i] = p;
 		}
 
@@ -38,7 +40,7 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 		for (int i = 0; i < transactions.count; ++i)
 		{
 			IAPTransaction* t = new IAPTransaction();
-			t->transaction = [transactions[i] retain];
+			t->transaction = transactions[i];
 			wrapped[i] = t;
 		}
 
