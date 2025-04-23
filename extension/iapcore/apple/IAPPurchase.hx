@@ -7,7 +7,7 @@ package extension.iapcore.apple;
  * @see https://developer.apple.com/documentation/storekit/skpaymenttransaction?language=objc
  */
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
-@:headerInclude('iap.hpp')
+@:headerInclude('iap_transaction.hpp')
 class IAPPurchase
 {
 	@:allow(extension.iapcore.apple.IAPApple)
@@ -105,7 +105,7 @@ class IAPPurchase
 
 @:allow(extension.iapcore.apple.IAPApple)
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
-@:headerInclude('iap.hpp')
+@:headerInclude('iap_transaction.hpp')
 @:native('IAPTransaction')
 extern class IAPTransaction {}
 #end

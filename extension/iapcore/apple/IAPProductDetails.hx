@@ -7,7 +7,7 @@ package extension.iapcore.apple;
  * @see https://developer.apple.com/documentation/storekit/skproduct?language=objc
  */
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
-@:headerInclude('iap.hpp')
+@:headerInclude('iap_product.hpp')
 class IAPProductDetails
 {
 	@:allow(extension.iapcore.apple.IAPApple)
@@ -92,7 +92,7 @@ class IAPProductDetails
 
 @:allow(extension.iapcore.apple.IAPApple)
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
-@:headerInclude('iap.hpp')
+@:headerInclude('iap_product.hpp')
 @:native('IAPProduct')
 extern class IAPProduct {}
 #end

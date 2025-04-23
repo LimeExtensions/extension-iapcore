@@ -7,7 +7,7 @@ import haxe.MainLoop;
 import lime.app.Event;
 
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
-@:headerInclude('iap.hpp')
+@:headerInclude('iap_core.hpp')
 class IAPApple
 {
 	public static final onProductDetailsReceived:Event<Array<IAPProductDetails>->Void> = new Event<Array<IAPProductDetails>->Void>();
