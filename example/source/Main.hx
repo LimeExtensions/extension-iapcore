@@ -107,13 +107,13 @@ class Main extends lime.app.Application
 					case IAPPurchaseState.PURCHASED:
 						logMessage('Purchase successful!');
 
-						IAPApple.finishTransaction(purchase);
+						IAPApple.finishPurchase(purchase);
 					case IAPPurchaseState.FAILED:
 						logMessage('Purchase failed.');
 					case IAPPurchaseState.RESTORED:
 						logMessage('Purchase restored.');
 
-						IAPApple.finishTransaction(purchase);
+						IAPApple.finishPurchase(purchase);
 					case IAPPurchaseState.DEFERRED:
 						logMessage('Purchase is deferred.');
 				}
