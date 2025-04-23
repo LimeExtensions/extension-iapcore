@@ -30,7 +30,7 @@ class IAPApple
 	{
 		if (productIdentifiers != null && productIdentifiers.length > 0)
 		{
-			final ptr:cpp.RawPointer<cpp.ConstCharStar> = cast cpp.Stdlib.nativeMalloc(productIdentifiers.length * cpp.Stdlib.sizeof(untyped __cpp__('const char *')));
+			final ptr:cpp.RawPointer<cpp.ConstCharStar> = cast cpp.Stdlib.nativeMalloc(productIdentifiers.length * untyped __cpp__('sizeof(const char *)'));
 
 			for (i in 0...productIdentifiers.length)
 				ptr[i] = cpp.ConstCharStar.fromString(productIdentifiers[i]);
