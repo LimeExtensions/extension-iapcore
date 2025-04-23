@@ -1,6 +1,11 @@
 package extension.iapcore.apple;
 
 #if (ios || tvos)
+/**
+ * An object in the payment queue.
+ * 
+ * @see https://developer.apple.com/documentation/storekit/skpaymenttransaction?language=objc
+ */
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
 @:headerInclude('iap.hpp')
 class IAPPurchase
@@ -16,6 +21,7 @@ class IAPPurchase
 		cpp.vm.Gc.setFinalizer(this, cpp.Function.fromStaticFunction(finalize));
 	}
 
+	/** Returns the transaction identifier. */
 	public function getTransactionIdentifier():String
 	{
 		if (handle != null && handle.raw != null)
@@ -24,6 +30,7 @@ class IAPPurchase
 		return '';
 	}
 
+	/** Returns the transaction date. */
 	public function getTransactionDate():String
 	{
 		if (handle != null && handle.raw != null)
@@ -32,6 +39,7 @@ class IAPPurchase
 		return '';
 	}
 
+	/** Returns the transaction state. */
 	public function getTransactionState():IAPPurchaseState
 	{
 		if (handle != null && handle.raw != null)
@@ -40,6 +48,7 @@ class IAPPurchase
 		return IAPPurchaseState.FAILED;
 	}
 
+	/** Returns the product identifier of the payment. */
 	public function getPaymentProductIdentifier():String
 	{
 		if (handle != null && handle.raw != null)
@@ -48,6 +57,7 @@ class IAPPurchase
 		return '';
 	}
 
+	/** Returns the quantity of the payment. */
 	public function getPaymentQuantity():IAPPurchaseState
 	{
 		if (handle != null && handle.raw != null)
@@ -56,6 +66,7 @@ class IAPPurchase
 		return -1;
 	}
 
+	/** Releases the internal `IAPTransaction` object, freeing up memory and retaining its associated resources. */
 	public function release():Void
 	{
 		if (handle != null && handle.raw != null)
@@ -68,22 +79,28 @@ class IAPPurchase
 	}
 
 	@:native('IAP_GetTransactionIdentifier')
-	extern public static function getTransactionIdentifierIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
+	@:noCompletion
+	extern private static function getTransactionIdentifierIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
 
 	@:native('IAP_GetTransactionDate')
-	extern public static function getTransactionDateIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
+	@:noCompletion
+	extern private static function getTransactionDateIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
 
 	@:native('IAP_GetTransactionState')
-	extern public static function getTransactionStateIAP(transaction:cpp.RawPointer<IAPTransaction>):Int;
+	@:noCompletion
+	extern private static function getTransactionStateIAP(transaction:cpp.RawPointer<IAPTransaction>):Int;
 
 	@:native('IAP_GetTransactionPaymentProductIdentifier')
-	extern public static function getTransactionPaymentProductIdentifierIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
+	@:noCompletion
+	extern private static function getTransactionPaymentProductIdentifierIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
 
 	@:native('IAP_GetTransactionPaymentQuantity')
-	extern public static function getTransactionPaymentQuantityIAP(transaction:cpp.RawPointer<IAPTransaction>):Int;
+	@:noCompletion
+	extern private static function getTransactionPaymentQuantityIAP(transaction:cpp.RawPointer<IAPTransaction>):Int;
 
 	@:native('IAP_ReleaseTransaction')
-	extern public static function releaseTransactionIAP(transaction:cpp.RawPointer<IAPTransaction>):Void;
+	@:noCompletion
+	extern private static function releaseTransactionIAP(transaction:cpp.RawPointer<IAPTransaction>):Void;
 }
 
 @:allow(extension.iapcore.apple.IAPApple)

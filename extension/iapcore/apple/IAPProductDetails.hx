@@ -1,6 +1,11 @@
 package extension.iapcore.apple;
 
 #if (ios || tvos)
+/**
+ * Information about a registered product in `App Store` Connect.
+ * 
+ * @see https://developer.apple.com/documentation/storekit/skproduct?language=objc
+ */
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
 @:headerInclude('iap.hpp')
 class IAPProductDetails
@@ -16,6 +21,7 @@ class IAPProductDetails
 		cpp.vm.Gc.setFinalizer(this, cpp.Function.fromStaticFunction(finalize));
 	}
 
+	/** Returns the product identifier. */
 	public function getProductIdentifier():String
 	{
 		if (handle != null && handle.raw != null)
@@ -24,6 +30,7 @@ class IAPProductDetails
 		return '';
 	}
 
+	/** Returns the localized title. */
 	public function getLocalizedTitle():String
 	{
 		if (handle != null && handle.raw != null)
@@ -32,6 +39,7 @@ class IAPProductDetails
 		return '';
 	}
 
+	/** Returns the localized description. */
 	public function getLocalizedDescription():String
 	{
 		if (handle != null && handle.raw != null)
@@ -40,6 +48,7 @@ class IAPProductDetails
 		return '';
 	}
 
+	/** Returns the localized title. */
 	public function getLocalizedPrice():String
 	{
 		if (handle != null && handle.raw != null)
@@ -48,6 +57,7 @@ class IAPProductDetails
 		return '';
 	}
 
+	/** Releases the internal `IAPProduct` object, freeing up memory and retaining its associated resources. */
 	public function release():Void
 	{
 		if (handle != null && handle.raw != null)
@@ -60,19 +70,24 @@ class IAPProductDetails
 	}
 
 	@:native('IAP_GetProductIdentifier')
-	extern public static function getProductIdentifierIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
+	@:noCompletion
+	extern private static function getProductIdentifierIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
 
 	@:native('IAP_GetLocalizedTitle')
-	extern public static function getLocalizedTitleIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
+	@:noCompletion
+	extern private static function getLocalizedTitleIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
 
 	@:native('IAP_GetLocalizedDescription')
-	extern public static function getLocalizedDescriptionIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
+	@:noCompletion
+	extern private static function getLocalizedDescriptionIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
 
 	@:native('IAP_GetLocalizedPrice')
-	extern public static function getLocalizedPriceIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
+	@:noCompletion
+	extern private static function getLocalizedPriceIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
 
 	@:native('IAP_ReleaseProduct')
-	extern public static function releaseProductIAP(product:cpp.RawPointer<IAPProduct>):Void;
+	@:noCompletion
+	extern private static function releaseProductIAP(product:cpp.RawPointer<IAPProduct>):Void;
 }
 
 @:allow(extension.iapcore.apple.IAPApple)

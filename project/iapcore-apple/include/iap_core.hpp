@@ -15,7 +15,7 @@ typedef void (*OnTransactionsUpdated)(IAPTransaction** transactions, int count);
 void IAP_Init(OnProductsReceived onProductsReceived, OnTransactionsUpdated onTransactionsUpdated);
 
 /**
- * Requests product information from the App Store for the given product identifiers.
+ * Requests product information from the `App Store` for the given product identifiers.
  * 
  * @param productIdentifiers Array of product identifier strings.
  * @param count Number of product identifiers.

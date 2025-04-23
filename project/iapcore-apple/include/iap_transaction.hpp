@@ -6,7 +6,7 @@ typedef struct IAPTransaction IAPTransaction;
  * Retrieves the transaction identifier for a given IAPTransaction.
  *
  * @param transaction The IAPTransaction object from which the transaction identifier is fetched.
- * @return The transaction identifier string if the transaction is valid, otherwise nullptr.
+ * @return The transaction identifier string if the transaction is valid, otherwise `nullptr`.
  */
 const char* IAP_GetTransactionIdentifier(IAPTransaction* transaction);
 
@@ -14,7 +14,7 @@ const char* IAP_GetTransactionIdentifier(IAPTransaction* transaction);
  * Retrieves the transaction date for a given IAPTransaction.
  *
  * @param transaction The IAPTransaction object from which the transaction date is fetched.
- * @return The formatted transaction date string if the transaction is valid, otherwise nullptr.
+ * @return The formatted transaction date string if the transaction is valid, otherwise `nullptr`.
  */
 const char* IAP_GetTransactionDate(IAPTransaction* transaction);
 
@@ -30,7 +30,7 @@ int IAP_GetTransactionState(IAPTransaction* transaction);
  * Retrieves the product identifier of the payment associated with a given IAPTransaction.
  *
  * @param transaction The IAPTransaction object from which the product identifier is fetched.
- * @return The product identifier string if the transaction is valid, otherwise nullptr.
+ * @return The product identifier string if the transaction is valid, otherwise `nullptr`.
  */
 const char* IAP_GetTransactionPaymentProductIdentifier(IAPTransaction* transaction);
 
