@@ -1,11 +1,7 @@
 #import "iap_transaction.hpp"
+#import "iap_transaction_internal.hpp"
 
 #import <StoreKit/StoreKit.h>
-
-struct IAPTransaction
-{
-	SKPaymentTransaction* transaction;
-};
 
 const char* IAP_GetTransactionIdentifier(IAPTransaction* transaction)
 {

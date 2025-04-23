@@ -1,11 +1,7 @@
 #import "iap_product.hpp"
+#import "iap_product_internal.hpp"
 
 #import <StoreKit/StoreKit.h>
-
-struct IAPProduct
-{
-	SKProduct* product;
-};
 
 const char* IAP_GetProductIdentifier(IAPProduct* product)
 {
