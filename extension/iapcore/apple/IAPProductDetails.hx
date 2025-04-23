@@ -17,8 +17,6 @@ class IAPProductDetails
 	private function new(handle:cpp.Pointer<IAPProduct>):Void
 	{
 		this.handle = handle;
-
-		cpp.vm.Gc.setFinalizer(this, cpp.Function.fromStaticFunction(finalize));
 	}
 
 	/** Returns the product identifier. */
@@ -62,11 +60,6 @@ class IAPProductDetails
 	{
 		if (handle != null && handle.raw != null)
 			releaseProductIAP(handle.raw);
-	}
-
-	private static function finalize(productDetails:IAPProductDetails):Void
-	{
-		productDetails.release();
 	}
 
 	@:native('IAP_GetProductIdentifier')
