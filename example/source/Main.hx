@@ -1,13 +1,18 @@
 package;
 
 #if android
+import android.widget.Toast;
 import extension.iapcore.android.IAPAndroid;
 import extension.iapcore.android.IAPProductDetails;
 import extension.iapcore.android.IAPPurchase;
 import extension.iapcore.android.IAPPurchaseState;
 import extension.iapcore.android.IAPResponseCode;
 import extension.iapcore.android.IAPResult;
-import android.widget.Toast;
+#elseif (ios || tvos)
+import extension.iapcore.apple.IAPApple;
+import extension.iapcore.apple.IAPProductDetails;
+import extension.iapcore.apple.IAPPurchase;
+import extension.iapcore.apple.IAPPurchaseState;
 #end
 
 class Main extends lime.app.Application
