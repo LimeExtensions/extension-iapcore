@@ -21,7 +21,13 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 		for (int i = 0; i < response.products.count; ++i)
 		{
 			IAPProduct* p = new IAPProduct();
+
 			p->product = response.products[i];
+
+#if !__has_feature(objc_arc)
+			[p->product retain];
+#endif
+
 			wrapped[i] = p;
 		}
 
@@ -40,7 +46,13 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 		for (int i = 0; i < transactions.count; ++i)
 		{
 			IAPTransaction* t = new IAPTransaction();
+
 			t->transaction = transactions[i];
+
+#if !__has_feature(objc_arc)
+            [t->transaction retain];
+#endif
+
 			wrapped[i] = t;
 		}
 

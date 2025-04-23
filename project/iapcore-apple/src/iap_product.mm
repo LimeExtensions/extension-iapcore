@@ -39,7 +39,10 @@ void IAP_ReleaseProduct(IAPProduct* product)
 {
 	if (product)
 	{
+#if !__has_feature(objc_arc)
 		[product->product release];
+#endif
+
 		delete product;
 	}
 }

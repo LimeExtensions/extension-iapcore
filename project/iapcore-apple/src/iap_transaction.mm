@@ -44,7 +44,10 @@ void IAP_ReleaseTransaction(IAPTransaction* transaction)
 {
 	if (transaction)
 	{
+#if !__has_feature(objc_arc)
 		[transaction->transaction release];
+#endif
+
 		delete transaction;
 	}
 }
