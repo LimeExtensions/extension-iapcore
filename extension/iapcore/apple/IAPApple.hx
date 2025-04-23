@@ -28,14 +28,15 @@ class IAPApple
 	 */
 	public static function requestProducts(productIdentifiers:Array<String>):Void
 	{
-		var ptr:cpp.RawPointer<cpp.ConstCharStar> = untyped __cpp__('new const char *[{0}]', productIdentifiers.length);
+		if (productIdentifiers != null && productIdentifiers.length > 0)
+		{
+			final ptr:cpp.RawPointer<cpp.ConstCharStar> = cast cpp.Stdlib.nativeMalloc(productIdentifiers.length * cpp.Stdlib.sizeof(cpp.ConstCharStar));
 
-		for (i in 0...productIdentifiers.length)
-			ptr[i] = cpp.ConstCharStar.fromString(productIdentifiers[i]);
+			for (i in 0...productIdentifiers.length)
+				ptr[i] = cpp.ConstCharStar.fromString(productIdentifiers[i]);
 
-		requestProductsIAP(ptr, productIdentifiers.length);
-
-		untyped __cpp__('delete[] {0}', ptr);
+			requestProductsIAP(ptr, productIdentifiers.length);
+		}
 	}
 
 	/**

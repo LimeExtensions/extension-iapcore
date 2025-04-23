@@ -52,7 +52,7 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 			t->transaction = transactions[i];
 
 #if !__has_feature(objc_arc)
-            [t->transaction retain];
+			[t->transaction retain];
 #endif
 
 			wrapped[i] = t;
@@ -86,12 +86,24 @@ void IAP_Init(OnProductsReceived onProductsReceived, OnTransactionsUpdated onTra
 
 void IAP_RequestProducts(const char** productIdentifiers, int count)
 {
-	dispatch_async(dispatch_get_main_queue(), ^
-	{
+	dispatch_async(dispatch_get_main_queue(), ^{
 		NSMutableSet* ids = [NSMutableSet set];
 
-		for (int i = 0; i < count; ++i)
-			[ids addObject:[NSString stringWithUTF8String:productIdentifiers[i]]];
+		if (productIdentifiers)
+		{
+			for (int i = 0; i < count; ++i)
+			{
+				if (productIdentifiers[i])
+				{
+					NSString* str = [NSString stringWithUTF8String:productIdentifiers[i]];
+
+					if (str)
+						[ids addObject:str];
+				}
+			}
+		}
+
+		free((void*) productIdentifiers);
 
 		SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:ids];
 		request.delegate = iapDelegate;
