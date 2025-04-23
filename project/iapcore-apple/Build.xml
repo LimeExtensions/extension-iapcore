@@ -13,9 +13,9 @@
 	<files id="iapcore">
 		<compilerflag value="-I${haxelib:extension-iapcore}/project/iapcore-apple/include" />
 
-		<file name="${haxelib:extension-iapcore}/project/iapcore-apple/src/iap_core.mm" />
 		<file name="${haxelib:extension-iapcore}/project/iapcore-apple/src/iap_product.mm" />
 		<file name="${haxelib:extension-iapcore}/project/iapcore-apple/src/iap_transaction.mm" />
+		<file name="${haxelib:extension-iapcore}/project/iapcore-apple/src/iap_core.mm" />		
 	</files>
 
 	<target id="haxe">

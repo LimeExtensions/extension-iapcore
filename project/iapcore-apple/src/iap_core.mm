@@ -1,6 +1,6 @@
-#import "iap_core.hpp"
 #import "iap_product.hpp"
 #import "iap_transaction.hpp"
+#import "iap_core.hpp"
 
 #import <StoreKit/StoreKit.h>
 
