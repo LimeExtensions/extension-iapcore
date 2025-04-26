@@ -79,9 +79,11 @@ class IAPApple
 	}
 
 	/**
-	 * Initiates the restoration of previously completed purchases.
+	 * Checks whether the device can make purchases.
+	 * 
+	 * @return `true` if the device can make purchases, otherwise `false`.
 	 */
-	 public static function restorePurchases():Void
+	public static function canMakePurchases():Bool
 	{
 		return canMakePurchasesIAP();
 	}
