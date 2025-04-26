@@ -3,8 +3,8 @@
 #include "iap_product.hpp"
 #include "iap_transaction.hpp"
 
-typedef void (*OnProductsReceived)(IAPProduct** products, int count);
-typedef void (*OnTransactionsUpdated)(IAPTransaction** transactions, int count);
+typedef void (*OnProductsReceived)(IAPProduct** products, size_t count);
+typedef void (*OnTransactionsUpdated)(IAPTransaction** transactions, size_t count);
 
 /**
  * Initializes the in-app purchase system with the provided callbacks.
@@ -20,7 +20,7 @@ void IAP_Init(OnProductsReceived onProductsReceived, OnTransactionsUpdated onTra
  * @param productIdentifiers Array of product identifier strings.
  * @param count Number of product identifiers.
  */
-void IAP_RequestProducts(const char** productIdentifiers, int count);
+void IAP_RequestProducts(const char** productIdentifiers, size_t count);
 
 /**
  * Initiates a purchase for the specified product with optional simulation of "Ask to Buy" in the sandbox.
@@ -45,3 +45,10 @@ void IAP_FinishTransaction(IAPTransaction* transaction);
  * Initiates the restoration of previously completed purchases.
  */
 void IAP_RestorePurchases(void);
+
+/**
+ * Checks whether the device can make purchases.
+ * 
+ * @return `true` if the device can make purchases, otherwise `false`.
+ */
+bool IAP_CanMakePurchases(void);

@@ -33,7 +33,7 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 			wrapped[i] = p;
 		}
 
-		gOnProductsReceived(wrapped, (int) response.products.count);
+		gOnProductsReceived(wrapped, response.products.count);
 
 		free(wrapped);
 	}
@@ -58,7 +58,7 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 			wrapped[i] = t;
 		}
 
-		gOnTransactionsUpdated(wrapped, (int) transactions.count);
+		gOnTransactionsUpdated(wrapped, transactions.count);
 
 		free(wrapped);
 	}
@@ -84,28 +84,15 @@ void IAP_Init(OnProductsReceived onProductsReceived, OnTransactionsUpdated onTra
 	});
 }
 
-void IAP_RequestProducts(const char** productIdentifiers, int count)
+void IAP_RequestProducts(const char** productIdentifiers, size_t count)
 {
+	NSMutableArray<NSString *> *productIdentifiersArray = [NSMutableArray array];
+
+	for (size_t i = 0; i < count; ++i)
+		[productIdentifiersArray addObject:[NSString stringWithUTF8String:productIdentifiers[i]]];
+
 	dispatch_async(dispatch_get_main_queue(), ^{
-		NSMutableSet* ids = [NSMutableSet set];
-
-		if (productIdentifiers)
-		{
-			for (int i = 0; i < count; ++i)
-			{
-				if (productIdentifiers[i])
-				{
-					NSString* str = [NSString stringWithUTF8String:productIdentifiers[i]];
-
-					if (str)
-						[ids addObject:str];
-				}
-			}
-		}
-
-		free((void*) productIdentifiers);
-
-		SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:ids];
+		SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:productIdentifiersArray]];
 		request.delegate = iapDelegate;
 		[request start];
 	});
@@ -142,3 +129,9 @@ void IAP_RestorePurchases(void)
 		[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 	});
 }
+
+bool IAP_CanMakePurchases(void)
+{
+	return [SKPaymentQueue canMakePayments] ? true : false;
+}
+

@@ -30,12 +30,14 @@ class IAPApple
 	{
 		if (productIdentifiers != null && productIdentifiers.length > 0)
 		{
-			final ptr:cpp.RawPointer<cpp.ConstCharStar> = cast cpp.Stdlib.nativeMalloc(productIdentifiers.length * untyped __cpp__('sizeof(const char *)'));
+			final ptr:cpp.RawPointer<cpp.ConstCharStar> = untyped __cpp__('new const char *[{0}]', productIdentifiers.length);
 
 			for (i in 0...productIdentifiers.length)
 				ptr[i] = cpp.ConstCharStar.fromString(productIdentifiers[i]);
 
 			requestProductsIAP(ptr, productIdentifiers.length);
+
+			untyped __cpp__('delete[] {0}', ptr);
 		}
 	}
 
@@ -76,8 +78,16 @@ class IAPApple
 		restorePurchasesIAP();
 	}
 
+	/**
+	 * Initiates the restoration of previously completed purchases.
+	 */
+	 public static function restorePurchases():Void
+	{
+		return canMakePurchasesIAP();
+	}
+
 	@:noCompletion
-	private static function onIAPProductsReceived(nativeProducts:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:Int):Void
+	private static function onIAPProductsReceived(nativeProducts:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:cpp.SizeT):Void
 	{
 		MainLoop.runInMainThread(function():Void
 		{
@@ -91,7 +101,7 @@ class IAPApple
 	}
 
 	@:noCompletion
-	private static function onIAPTransactionsUpdated(nativeTransactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:Int):Void
+	private static function onIAPTransactionsUpdated(nativeTransactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT):Void
 	{
 		MainLoop.runInMainThread(function():Void
 		{
@@ -110,7 +120,7 @@ class IAPApple
 
 	@:native('IAP_RequestProducts')
 	@:noCompletion
-	extern private static function requestProductsIAP(productIdentifiers:cpp.RawPointer<cpp.ConstCharStar>, count:Int):Void;
+	extern private static function requestProductsIAP(productIdentifiers:cpp.RawPointer<cpp.ConstCharStar>, count:cpp.SizeT):Void;
 
 	@:native('IAP_PurchaseProduct')
 	@:noCompletion
@@ -123,8 +133,12 @@ class IAPApple
 	@:native('IAP_RestorePurchases')
 	@:noCompletion
 	extern private static function restorePurchasesIAP():Void;
+
+	@:native('IAP_CanMakePurchases')
+	@:noCompletion
+	extern private static function canMakePurchasesIAP():Bool;
 }
 
-private typedef OnProductsReceived = cpp.Callable<(products:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:Int) -> Void>;
-private typedef OnTransactionsUpdated = cpp.Callable<(transactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:Int) -> Void>;
+private typedef OnProductsReceived = cpp.Callable<(products:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:cpp.SizeT) -> Void>;
+private typedef OnTransactionsUpdated = cpp.Callable<(transactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT) -> Void>;
 #end
