@@ -3,7 +3,6 @@ package extension.iapcore.apple;
 #if (ios || tvos)
 import extension.iapcore.apple.IAPProductDetails;
 import extension.iapcore.apple.IAPPurchase;
-import haxe.MainLoop;
 import lime.app.Event;
 
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
@@ -91,35 +90,29 @@ class IAPApple
 	@:noCompletion
 	private static function onIAPProductsReceived(nativeProducts:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:cpp.SizeT):Void
 	{
-		MainLoop.runInMainThread(function():Void
+		final products:Array<IAPProductDetails> = [];
+
+		if (nativeProducts != null)
 		{
-			final products:Array<IAPProductDetails> = [];
+			for (i in 0...count)
+				products.push(new IAPProductDetails(cpp.Pointer.fromRaw(nativeProducts[i])));
+		}
 
-			if (nativeProducts != null)
-			{
-				for (i in 0...count)
-					products.push(new IAPProductDetails(cpp.Pointer.fromRaw(nativeProducts[i])));
-			}
-
-			onProductDetailsReceived.dispatch(products);
-		});
+		onProductDetailsReceived.dispatch(products);
 	}
 
 	@:noCompletion
 	private static function onIAPTransactionsUpdated(nativeTransactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT):Void
 	{
-		MainLoop.runInMainThread(function():Void
+		final purchases:Array<IAPPurchase> = [];
+
+		if (nativeTransactions != null)
 		{
-			final purchases:Array<IAPPurchase> = [];
+			for (i in 0...count)
+				purchases.push(new IAPPurchase(cpp.Pointer.fromRaw(nativeTransactions[i])));
+		}
 
-			if (nativeTransactions != null)
-			{
-				for (i in 0...count)
-					purchases.push(new IAPPurchase(cpp.Pointer.fromRaw(nativeTransactions[i])));
-			}
-
-			onPurchasesUpdated.dispatch(purchases);
-		});
+		onPurchasesUpdated.dispatch(purchases);
 	}
 
 	@:native('IAP_Init')
