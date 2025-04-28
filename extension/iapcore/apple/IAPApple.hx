@@ -95,8 +95,11 @@ class IAPApple
 		{
 			final products:Array<IAPProductDetails> = [];
 
-			for (i in 0...count)
-				products.push(new IAPProductDetails(cpp.Pointer.fromRaw(nativeProducts[i])));
+			if (nativeProducts != null)
+			{
+				for (i in 0...count)
+					products.push(new IAPProductDetails(cpp.Pointer.fromRaw(nativeProducts[i])));
+			}
 
 			onProductDetailsReceived.dispatch(products);
 		});
@@ -109,8 +112,11 @@ class IAPApple
 		{
 			final purchases:Array<IAPPurchase> = [];
 
-			for (i in 0...count)
-				purchases.push(new IAPPurchase(cpp.Pointer.fromRaw(nativeTransactions[i])));
+			if (nativeTransactions != null)
+			{
+				for (i in 0...count)
+					purchases.push(new IAPPurchase(cpp.Pointer.fromRaw(nativeTransactions[i])));
+			}
 
 			onPurchasesUpdated.dispatch(purchases);
 		});

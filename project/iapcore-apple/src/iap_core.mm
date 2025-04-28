@@ -18,24 +18,30 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 {
 	if (gOnProductsReceived)
 	{
-		IAPProduct** wrapped = (IAPProduct**) malloc(sizeof(IAPProduct*) * response.products.count);
+		IAPProduct** wrapped = nullptr;
 
-		for (int i = 0; i < response.products.count; ++i)
+		if (response.products.count > 0)
 		{
-			IAPProduct* p = new IAPProduct();
+			wrapped = (IAPProduct**) malloc(sizeof(IAPProduct*) * response.products.count);
 
-			p->product = response.products[i];
+			for (int i = 0; i < response.products.count; ++i)
+			{
+				IAPProduct* p = new IAPProduct();
+
+				p->product = response.products[i];
 
 #if !__has_feature(objc_arc)
-			[p->product retain];
+				[p->product retain];
 #endif
 
-			wrapped[i] = p;
+				wrapped[i] = p;
+			}
 		}
 
 		gOnProductsReceived(wrapped, response.products.count);
 
-		free(wrapped);
+		if (wrapped)
+			free(wrapped);
 	}
 }
 
@@ -43,24 +49,30 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 {
 	if (gOnTransactionsUpdated)
 	{
-		IAPTransaction** wrapped = (IAPTransaction**) malloc(sizeof(IAPTransaction*) * transactions.count);
+		IAPTransaction** wrapped = nullptr;
 
-		for (int i = 0; i < transactions.count; ++i)
+		if (transactions.count > 0)
 		{
-			IAPTransaction* t = new IAPTransaction();
+			wrapped = (IAPTransaction**) malloc(sizeof(IAPTransaction*) * transactions.count);
 
-			t->transaction = transactions[i];
+			for (int i = 0; i < transactions.count; ++i)
+			{
+				IAPTransaction* t = new IAPTransaction();
+
+				t->transaction = transactions[i];
 
 #if !__has_feature(objc_arc)
-			[t->transaction retain];
+				[t->transaction retain];
 #endif
 
-			wrapped[i] = t;
+				wrapped[i] = t;
+			}
 		}
 
 		gOnTransactionsUpdated(wrapped, transactions.count);
 
-		free(wrapped);
+		if (wrapped)
+			free(wrapped);
 	}
 }
 
