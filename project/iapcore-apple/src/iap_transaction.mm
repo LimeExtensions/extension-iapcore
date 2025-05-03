@@ -1,5 +1,6 @@
+#define IAPCORE_INTERNAL
+
 #import "iap_transaction.hpp"
-#import "iap_transaction_internal.hpp"
 
 #import <StoreKit/StoreKit.h>
 

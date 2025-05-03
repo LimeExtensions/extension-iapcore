@@ -1,5 +1,14 @@
 #pragma once
 
+#ifndef IAPCORE_INTERNAL
+#import <StoreKit/StoreKit.h>
+
+struct IAPTransaction
+{
+    SKPaymentTransaction* transaction;
+};
+#endif
+
 typedef struct IAPTransaction IAPTransaction;
 
 /**

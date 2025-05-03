@@ -1,5 +1,14 @@
 #pragma once
 
+#ifndef IAPCORE_INTERNAL
+#import <StoreKit/StoreKit.h>
+
+struct IAPProduct
+{
+    SKProduct* product;
+};
+#endif
+
 typedef struct IAPProduct IAPProduct;
 
 /**
