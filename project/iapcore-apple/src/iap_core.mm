@@ -18,30 +18,33 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 {
 	if (gOnProductsReceived)
 	{
-		IAPProduct** wrapped = nullptr;
-
-		if (response.products.count > 0)
+		dispatch_async(dispatch_get_main_queue(), ^
 		{
-			wrapped = (IAPProduct**) malloc(sizeof(IAPProduct*) * response.products.count);
+			IAPProduct** wrapped = nullptr;
 
-			for (int i = 0; i < response.products.count; ++i)
+			if (response.products.count > 0)
 			{
-				IAPProduct* p = new IAPProduct();
+				wrapped = (IAPProduct**) malloc(sizeof(IAPProduct*) * response.products.count);
 
-				p->product = response.products[i];
+				for (int i = 0; i < response.products.count; ++i)
+				{
+					IAPProduct* p = new IAPProduct();
 
-#if !__has_feature(objc_arc)
-				[p->product retain];
-#endif
+					p->product = response.products[i];
 
-				wrapped[i] = p;
+	#if !__has_feature(objc_arc)
+					[p->product retain];
+	#endif
+
+					wrapped[i] = p;
+				}
 			}
-		}
 
-		gOnProductsReceived(wrapped, response.products.count);
+			gOnProductsReceived(wrapped, response.products.count);
 
-		if (wrapped)
-			free(wrapped);
+			if (wrapped)
+				free(wrapped);
+		});
 	}
 }
 
@@ -49,30 +52,33 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 {
 	if (gOnTransactionsUpdated)
 	{
-		IAPTransaction** wrapped = nullptr;
-
-		if (transactions.count > 0)
+		dispatch_async(dispatch_get_main_queue(), ^
 		{
-			wrapped = (IAPTransaction**) malloc(sizeof(IAPTransaction*) * transactions.count);
+			IAPTransaction** wrapped = nullptr;
 
-			for (int i = 0; i < transactions.count; ++i)
+			if (transactions.count > 0)
 			{
-				IAPTransaction* t = new IAPTransaction();
+				wrapped = (IAPTransaction**) malloc(sizeof(IAPTransaction*) * transactions.count);
 
-				t->transaction = transactions[i];
+				for (int i = 0; i < transactions.count; ++i)
+				{
+					IAPTransaction* t = new IAPTransaction();
 
-#if !__has_feature(objc_arc)
-				[t->transaction retain];
-#endif
+					t->transaction = transactions[i];
 
-				wrapped[i] = t;
+	#if !__has_feature(objc_arc)
+					[t->transaction retain];
+	#endif
+
+					wrapped[i] = t;
+				}
 			}
-		}
 
-		gOnTransactionsUpdated(wrapped, transactions.count);
+			gOnTransactionsUpdated(wrapped, transactions.count);
 
-		if (wrapped)
-			free(wrapped);
+			if (wrapped)
+				free(wrapped);
+		});
 	}
 }
 
