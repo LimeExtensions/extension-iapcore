@@ -10,7 +10,7 @@ A Haxe/[Lime](https://lime.openfl.org) extension that implements In-App Purchase
 ### Supported Platforms
 
 - **Android** using [Google Play Billing](https://developer.android.com/distribute/play-billing) (**Curently implemented**).
-- **iOS** add **tvOS` using [StoreKit](https://developer.apple.com/documentation/storekit?language=objc) (**Curently implemented**).
+- **iOS** add **tvOS** using [StoreKit](https://developer.apple.com/documentation/storekit?language=objc) (**Curently implemented**).
 
 ### Installation
 
