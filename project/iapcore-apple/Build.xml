@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<pragma once="true" />
+
+	<files id="haxe">
+		<compilerflag value="-I${haxelib:extension-iapcore}/project/iapcore-apple/include" />
+	</files>
+
+	<files id="__main__">
+		<compilerflag value="-I${haxelib:extension-iapcore}/project/iapcore-apple/include" />
+	</files>
+
+	<files id="iapcore">
+		<compilerflag value="-I${haxelib:extension-iapcore}/project/iapcore-apple/include" />
+
+		<file name="${haxelib:extension-iapcore}/project/iapcore-apple/src/iap_product.mm" />
+		<file name="${haxelib:extension-iapcore}/project/iapcore-apple/src/iap_transaction.mm" />
+		<file name="${haxelib:extension-iapcore}/project/iapcore-apple/src/iap_core.mm" />		
+	</files>
+
+	<target id="haxe">
+		<vflag name="-framework" value="StoreKit" />
+
+		<files id="iapcore" />
+	</target>
+</xml>
