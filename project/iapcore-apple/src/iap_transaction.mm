@@ -27,6 +27,22 @@ int IAP_GetTransactionState(IAPTransaction* transaction)
 	return transaction ? (int) transaction->transaction.transactionState : -1;
 }
 
+const char* IAP_GetTransactionError(IAPTransaction* transaction, int* outCode)
+{
+	if (transaction && transaction->transaction.error)
+	{
+		if (outCode)
+			(*outCode) = (int) transaction->transaction.error.code;
+
+		return [transaction->transaction.error.localizedDescription UTF8String];
+	}
+
+	if (outCode)
+		(*outCode) = 0;
+
+	return nullptr;
+}
+
 const char* IAP_GetTransactionPaymentProductIdentifier(IAPTransaction* transaction)
 {
 	return transaction ? [transaction->transaction.payment.productIdentifier UTF8String] : nullptr;

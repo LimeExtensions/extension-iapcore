@@ -5,11 +5,20 @@ import extension.iapcore.apple.IAPProductDetails;
 import extension.iapcore.apple.IAPPurchase;
 import lime.app.Event;
 
+/**
+ * A class for managing in-app purchases on Apple Devices using StoreKit.
+ */
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
 @:headerInclude('iap_core.hpp')
 class IAPApple
 {
+	/** Event triggered when product details are successfully received from the App Store. */
 	public static final onProductDetailsReceived:Event<Array<IAPProductDetails>->Void> = new Event<Array<IAPProductDetails>->Void>();
+
+	/** Event triggered when retrieving product details from the App Store fails. */
+	public static final onProductDetailsFailed:Event<IAPError->Void> = new Event<IAPError->Void>();
+
+	/** Event triggered when in-app purchase transactions are updated. */
 	public static final onPurchasesUpdated:Event<Array<IAPPurchase>->Void> = new Event<Array<IAPPurchase>->Void>();
 
 	/**
@@ -17,7 +26,11 @@ class IAPApple
 	 */
 	public static function init():Void
 	{
-		initIAP(cpp.Callable.fromStaticFunction(onIAPProductsReceived), cpp.Callable.fromStaticFunction(onIAPTransactionsUpdated));
+		final callbacks:IAPCallbacks = new IAPCallbacks();
+		callbacks.onProductsReceived = cpp.Callable.fromStaticFunction(onIAPProductsReceived);
+		callbacks.onProductsFailed = cpp.Callable.fromStaticFunction(onIAPProductsFailed);
+		callbacks.onTransactionsUpdated = cpp.Callable.fromStaticFunction(onIAPTransactionsUpdated);
+		initIAP(cpp.RawConstPointer.addressOf(callbacks));
 	}
 
 	/**
@@ -102,6 +115,12 @@ class IAPApple
 	}
 
 	@:noCompletion
+	private static function onIAPProductsFailed(message:cpp.ConstCharStar, code:Int):Void
+	{
+		onProductDetailsFailed.dispatch(new IAPError((message : String), code));
+	}
+
+	@:noCompletion
 	private static function onIAPTransactionsUpdated(nativeTransactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT):Void
 	{
 		final purchases:Array<IAPPurchase> = [];
@@ -117,7 +136,7 @@ class IAPApple
 
 	@:native('IAP_Init')
 	@:noCompletion
-	extern private static function initIAP(onProductsReceived:OnProductsReceived, onTransactionsUpdated:OnTransactionsUpdated):Void;
+	extern private static function initIAP(callbacks:cpp.RawConstPointer<IAPCallbacks>):Void;
 
 	@:native('IAP_RequestProducts')
 	@:noCompletion
@@ -140,6 +159,16 @@ class IAPApple
 	extern private static function canMakePurchasesIAP():Bool;
 }
 
-private typedef OnProductsReceived = cpp.Callable<(products:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:cpp.SizeT) -> Void>;
-private typedef OnTransactionsUpdated = cpp.Callable<(transactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT) -> Void>;
+@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
+@:include('iap_core.hpp')
+@:structAccess
+@:native('IAPCallbacks')
+extern class IAPCallbacks
+{
+	function new():Void;
+
+	var onProductsReceived:cpp.Callable<(products:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:cpp.SizeT) -> Void>;
+	var onProductsFailed:cpp.Callable<(message:cpp.ConstCharStar, code:Int) -> Void>;
+	var onTransactionsUpdated:cpp.Callable<(transactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT) -> Void>;
+}
 #end

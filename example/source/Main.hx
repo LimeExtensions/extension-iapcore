@@ -45,7 +45,7 @@ class Main extends lime.app.Application
 
 		IAPAndroid.onProductDetailsResponse.add(function(result:IAPResult, productDetails:Array<IAPProductDetails>):Void
 		{
-			logMessage('Product details response "$result", $productDetails');
+			logMessage('Product details response "$result", $productDetails.');
 		});
 
 		function handlePurchases(purchases:Array<IAPPurchase>):Void
@@ -57,16 +57,16 @@ class Main extends lime.app.Application
 					if (!purchase.isAcknowledged())
 						IAPAndroid.acknowledgePurchase(purchase.getPurchaseToken());
 					else
-						logMessage('Already acknowledged: ${purchase.getPurchaseToken()}');
+						logMessage('Already acknowledged: ${purchase.getPurchaseToken()}.');
 				}
 				else
-					logMessage('Purchase not completed: ${purchase.getPurchaseState()}');
+					logMessage('Purchase not completed: ${purchase.getPurchaseState()}.');
 			}
 		}
 
 		IAPAndroid.onQueryPurchasesResponse.add(function(result:IAPResult, purchases:Array<IAPPurchase>):Void
 		{
-			logMessage('Query purchases response "$result", $purchases');
+			logMessage('Query purchases response "$result", $purchases.');
 
 			if (result.getResponseCode() == IAPResponseCode.OK)
 				handlePurchases(purchases);
@@ -74,7 +74,7 @@ class Main extends lime.app.Application
 
 		IAPAndroid.onPurchasesUpdated.add(function(result:IAPResult, purchases:Array<IAPPurchase>):Void
 		{
-			logMessage('Purchases updated response "$result", $purchases');
+			logMessage('Purchases updated response "$result", $purchases.');
 
 			if (result.getResponseCode() == IAPResponseCode.OK)
 				handlePurchases(purchases);
@@ -85,25 +85,31 @@ class Main extends lime.app.Application
 			if (result.getResponseCode() == IAPResponseCode.OK)
 				logMessage('Purchase acknowledged successfully!');
 			else
-				logMessage('Failed to acknowledge purchase: $result');
+				logMessage('Failed to acknowledge purchase: $result.');
 		});
 		#elseif (ios || tvos)
 		IAPApple.onProductDetailsReceived.add(function(products:Array<IAPProductDetails>):Void
 		{
 			if (products.length > 0)
 			{
-				logMessage('Product received: ${products[0].getLocalizedTitle()}');
+				logMessage('Product received: ${products[0].getLocalizedTitle()}.');
 
 				IAPApple.purchaseProduct(products[0]);
 			}
 		});
+
+		IAPApple.onProductDetailsFailed.add(function(error:IAPError):Void
+		{
+			logMessage('Product details error: $error.');
+		});
+
 		IAPApple.onPurchasesUpdated.add(function(purchases:Array<IAPPurchase>):Void
 		{
 			for (purchase in purchases)
 			{
-				logMessage('Transaction ID: ${purchase.getTransactionIdentifier()}');
-				logMessage('Transaction Date: ${purchase.getTransactionDate()}');
-				logMessage('Transaction Payment Product ID: ${purchase.getPaymentProductIdentifier()}');
+				logMessage('Transaction ID: ${purchase.getTransactionIdentifier()}.');
+				logMessage('Transaction Date: ${purchase.getTransactionDate()}.');
+				logMessage('Transaction Payment Product ID: ${purchase.getPaymentProductIdentifier()}.');
 
 				switch (purchase.getTransactionState())
 				{
@@ -114,7 +120,7 @@ class Main extends lime.app.Application
 
 						IAPApple.finishPurchase(purchase);
 					case IAPPurchaseState.FAILED:
-						logMessage('Purchase failed.');
+						logMessage('Purchase failed: ${purchase.getTransactionError()}.');
 					case IAPPurchaseState.RESTORED:
 						logMessage('Purchase restored.');
 

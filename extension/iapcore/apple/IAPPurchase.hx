@@ -48,6 +48,18 @@ class IAPPurchase
 		return IAPPurchaseState.FAILED;
 	}
 
+	/** Returns the transaction error, if any. */
+	public function getTransactionError():IAPError
+	{
+		var message:String = 'Unknown transaction error.';
+		var code:Int = -1;
+
+		if (handle != null && handle.raw != null)
+			message = getTransactionErrorIAP(handle.raw, cpp.Pointer.addressOf(code).raw);
+
+		return new IAPError(message, code);
+	}
+
 	/** Returns the product identifier of the payment. */
 	public function getPaymentProductIdentifier():String
 	{
@@ -89,6 +101,10 @@ class IAPPurchase
 	@:native('IAP_GetTransactionState')
 	@:noCompletion
 	extern private static function getTransactionStateIAP(transaction:cpp.RawPointer<IAPTransaction>):Int;
+
+	@:native('IAP_GetTransactionError')
+	@:noCompletion
+	extern private static function getTransactionErrorIAP(transaction:cpp.RawPointer<IAPTransaction>, outCode:cpp.RawPointer<Int>):cpp.ConstCharStar;
 
 	@:native('IAP_GetTransactionPaymentProductIdentifier')
 	@:noCompletion

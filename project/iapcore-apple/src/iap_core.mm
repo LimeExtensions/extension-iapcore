@@ -6,8 +6,7 @@
 
 #import <StoreKit/StoreKit.h>
 
-static OnProductsReceived gOnProductsReceived = nullptr;
-static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
+static IAPCallbacks gIAPCallbacks = NULL;
 
 @interface IAPDelegate : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
@@ -16,7 +15,7 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 
 - (void)productsRequest:(SKProductsRequest*)request didReceiveResponse:(SKProductsResponse*)response
 {
-	if (gOnProductsReceived)
+	if (gIAPCallbacks && gIAPCallbacks.onProductsReceived)
 	{
 		dispatch_async(dispatch_get_main_queue(), ^
 		{
@@ -32,15 +31,15 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 
 					p->product = response.products[i];
 
-	#if !__has_feature(objc_arc)
+#if !__has_feature(objc_arc)
 					[p->product retain];
-	#endif
+#endif
 
 					wrapped[i] = p;
 				}
 			}
 
-			gOnProductsReceived(wrapped, response.products.count);
+			gIAPCallbacks.onProductsReceived(wrapped, response.products.count);
 
 			if (wrapped)
 				free(wrapped);
@@ -48,9 +47,19 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 	}
 }
 
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error
+{
+	if (gIAPCallbacks && gIAPCallbacks.onProductsFailed)
+	{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			gIAPCallbacks.onProductsFailed(error.localizedDescription.UTF8String);
+		});
+	}
+}
+
 - (void)paymentQueue:(SKPaymentQueue*)queue updatedTransactions:(NSArray<SKPaymentTransaction*>*)transactions
 {
-	if (gOnTransactionsUpdated)
+	if (gIAPCallbacks && gIAPCallbacks.onTransactionsUpdated)
 	{
 		dispatch_async(dispatch_get_main_queue(), ^
 		{
@@ -66,15 +75,15 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 
 					t->transaction = transactions[i];
 
-	#if !__has_feature(objc_arc)
+#if !__has_feature(objc_arc)
 					[t->transaction retain];
-	#endif
+#endif
 
 					wrapped[i] = t;
 				}
 			}
 
-			gOnTransactionsUpdated(wrapped, transactions.count);
+			gIAPCallbacks.onTransactionsUpdated(wrapped, transactions.count);
 
 			if (wrapped)
 				free(wrapped);
@@ -86,10 +95,10 @@ static OnTransactionsUpdated gOnTransactionsUpdated = nullptr;
 
 static IAPDelegate* iapDelegate = nil;
 
-void IAP_Init(OnProductsReceived onProductsReceived, OnTransactionsUpdated onTransactionsUpdated)
+void IAP_Init(const IAPCallbacks* callbacks)
 {
-	gOnProductsReceived = onProductsReceived;
-	gOnTransactionsUpdated = onTransactionsUpdated;
+	if (callbacks)
+		gIAPCallbacks = (*callbacks);
 
 	dispatch_async(dispatch_get_main_queue(), ^
 	{

@@ -3,16 +3,19 @@
 #include "iap_product.hpp"
 #include "iap_transaction.hpp"
 
-typedef void (*OnProductsReceived)(IAPProduct** products, size_t count);
-typedef void (*OnTransactionsUpdated)(IAPTransaction** transactions, size_t count);
+typedef struct IAPCallbacks
+{
+	void (*onProductsReceived)(IAPProduct** products, size_t count);
+	void (*onProductsFailed)(const char* message, int code);
+	void (*onTransactionsUpdated)(IAPTransaction** transactions, size_t count);
+} IAPCallbacks;
 
 /**
  * Initializes the in-app purchase system with the provided callbacks.
  * 
- * @param onProductsReceived Callback for received products.
- * @param onTransactionsUpdated Callback for updated transactions.
+ * @param callbacks Pointer to struct containing all IAP-related callbacks.
  */
-void IAP_Init(OnProductsReceived onProductsReceived, OnTransactionsUpdated onTransactionsUpdated);
+void IAP_Init(const IAPCallbacks* callbacks);
 
 /**
  * Requests product information from the `App Store` for the given product identifiers.

@@ -36,6 +36,15 @@ const char* IAP_GetTransactionDate(IAPTransaction* transaction);
 int IAP_GetTransactionState(IAPTransaction* transaction);
 
 /**
+ * Retrieves the localized error message and code of a failed transaction, if any.
+ *
+ * @param transaction The IAPTransaction object to inspect.
+ * @param outCode Optional output pointer to receive the error code. Can be nullptr.
+ * @return The localized error message string if available, otherwise nullptr.
+ */
+const char* IAP_GetTransactionError(IAPTransaction* transaction, int* outCode);
+
+/**
  * Retrieves the product identifier of the payment associated with a given IAPTransaction.
  *
  * @param transaction The IAPTransaction object from which the product identifier is fetched.
