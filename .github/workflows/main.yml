@@ -1,5 +1,14 @@
 name: Testing
-on: workflow_dispatch
+on:
+  push:
+    branches: main
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.md'
+      - 'haxelib.json'
+      - 'hxformat.json'
+  pull_request:
+  workflow_dispatch:
 jobs:
   Android:
     runs-on: macos-15
@@ -15,7 +24,6 @@ jobs:
       - name: Install Haxe Libraries
         run: |
           haxelib install lime --quiet --never --skip-dependencies
-          haxelib install extension-androidtools --quiet --never --skip-dependencies
           haxelib dev extension-iapcore .
 
       - name: Setup hxcpp Library
