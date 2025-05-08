@@ -4,18 +4,13 @@
 
 A Haxe/[Lime](https://lime.openfl.org) extension that implements In-App Purchases (IAP) functionality for Android and iOS devices.
 
-> [!WARNING]
-> The library is still a **Work in Progress** and till is finished, it won't be published to `Haxelib`.
-
-### Supported Platforms
-
-- **Android** using [Google Play Billing](https://developer.android.com/distribute/play-billing) (**Curently implemented**).
-- **iOS** add **tvOS** using [StoreKit](https://developer.apple.com/documentation/storekit?language=objc) (**Curently implemented**).
-
 ### Installation
 
-You can install it through `Git`
-
+You can install it through `Haxelib`
+```bash
+haxelib install extension-iapcore
+```
+Or through `Git`, if you want the latest updates
 ```bash
 haxelib git extension-iapcore https://github.com/MAJigsaw77/extension-iapcore.git
 ```
