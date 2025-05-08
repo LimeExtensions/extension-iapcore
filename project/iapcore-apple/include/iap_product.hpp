@@ -5,7 +5,7 @@
 
 struct IAPProduct
 {
-    SKProduct* product;
+	SKProduct* product;
 };
 #endif
 

@@ -5,7 +5,7 @@
 
 struct IAPTransaction
 {
-    SKPaymentTransaction* transaction;
+	SKPaymentTransaction* transaction;
 };
 #endif
 

@@ -6,7 +6,7 @@
 
 #import <StoreKit/StoreKit.h>
 
-static IAPCallbacks gIAPCallbacks = NULL;
+static const IAPCallbacks* gIAPCallbacks = nullptr;
 
 @interface IAPDelegate : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
@@ -15,7 +15,7 @@ static IAPCallbacks gIAPCallbacks = NULL;
 
 - (void)productsRequest:(SKProductsRequest*)request didReceiveResponse:(SKProductsResponse*)response
 {
-	if (gIAPCallbacks && gIAPCallbacks.onProductsReceived)
+	if (gIAPCallbacks && gIAPCallbacks->onProductsReceived)
 	{
 		dispatch_async(dispatch_get_main_queue(), ^
 		{
@@ -28,7 +28,6 @@ static IAPCallbacks gIAPCallbacks = NULL;
 				for (int i = 0; i < response.products.count; ++i)
 				{
 					IAPProduct* p = new IAPProduct();
-
 					p->product = response.products[i];
 
 #if !__has_feature(objc_arc)
@@ -39,7 +38,7 @@ static IAPCallbacks gIAPCallbacks = NULL;
 				}
 			}
 
-			gIAPCallbacks.onProductsReceived(wrapped, response.products.count);
+			gIAPCallbacks->onProductsReceived(wrapped, response.products.count);
 
 			if (wrapped)
 				free(wrapped);
@@ -49,17 +48,17 @@ static IAPCallbacks gIAPCallbacks = NULL;
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error
 {
-	if (gIAPCallbacks && gIAPCallbacks.onProductsFailed)
+	if (gIAPCallbacks && gIAPCallbacks->onProductsFailed)
 	{
 		dispatch_async(dispatch_get_main_queue(), ^{
-			gIAPCallbacks.onProductsFailed(error.localizedDescription.UTF8String);
+			gIAPCallbacks->onProductsFailed([error.localizedDescription UTF8String], (int) error.code);
 		});
 	}
 }
 
 - (void)paymentQueue:(SKPaymentQueue*)queue updatedTransactions:(NSArray<SKPaymentTransaction*>*)transactions
 {
-	if (gIAPCallbacks && gIAPCallbacks.onTransactionsUpdated)
+	if (gIAPCallbacks && gIAPCallbacks->onTransactionsUpdated)
 	{
 		dispatch_async(dispatch_get_main_queue(), ^
 		{
@@ -72,7 +71,6 @@ static IAPCallbacks gIAPCallbacks = NULL;
 				for (int i = 0; i < transactions.count; ++i)
 				{
 					IAPTransaction* t = new IAPTransaction();
-
 					t->transaction = transactions[i];
 
 #if !__has_feature(objc_arc)
@@ -83,7 +81,7 @@ static IAPCallbacks gIAPCallbacks = NULL;
 				}
 			}
 
-			gIAPCallbacks.onTransactionsUpdated(wrapped, transactions.count);
+			gIAPCallbacks->onTransactionsUpdated(wrapped, transactions.count);
 
 			if (wrapped)
 				free(wrapped);
@@ -97,15 +95,13 @@ static IAPDelegate* iapDelegate = nil;
 
 void IAP_Init(const IAPCallbacks* callbacks)
 {
-	if (callbacks)
-		gIAPCallbacks = (*callbacks);
+	gIAPCallbacks = callbacks;
 
 	dispatch_async(dispatch_get_main_queue(), ^
 	{
 		if (!iapDelegate)
 		{
 			iapDelegate = [IAPDelegate new];
-
 			[[SKPaymentQueue defaultQueue] addTransactionObserver:iapDelegate];
 		}
 	});
@@ -161,4 +157,3 @@ bool IAP_CanMakePurchases(void)
 {
 	return [SKPaymentQueue canMakePayments] ? true : false;
 }
-
