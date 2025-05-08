@@ -1,6 +1,6 @@
-package extension.iapcore.apple;
+package extension.iapcore.ios;
 
-#if (ios || tvos)
+#if ios
 /**
  * Values representing the state of a transaction.
  * 

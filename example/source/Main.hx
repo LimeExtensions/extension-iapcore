@@ -7,12 +7,12 @@ import extension.iapcore.android.IAPPurchase;
 import extension.iapcore.android.IAPPurchaseState;
 import extension.iapcore.android.IAPResponseCode;
 import extension.iapcore.android.IAPResult;
-#elseif (ios || tvos)
-import extension.iapcore.apple.IAPApple;
-import extension.iapcore.apple.IAPError;
-import extension.iapcore.apple.IAPProductDetails;
-import extension.iapcore.apple.IAPPurchase;
-import extension.iapcore.apple.IAPPurchaseState;
+#elseif ios
+import extension.iapcore.ios.IAPError;
+import extension.iapcore.ios.IAPIOS;
+import extension.iapcore.ios.IAPProductDetails;
+import extension.iapcore.ios.IAPPurchase;
+import extension.iapcore.ios.IAPPurchaseState;
 #end
 
 class Main extends lime.app.Application
@@ -87,23 +87,23 @@ class Main extends lime.app.Application
 			else
 				trace('Failed to acknowledge purchase: $result.');
 		});
-		#elseif (ios || tvos)
-		IAPApple.onProductDetailsReceived.add(function(products:Array<IAPProductDetails>):Void
+		#elseif ios
+		IAPIOS.onProductDetailsReceived.add(function(products:Array<IAPProductDetails>):Void
 		{
 			if (products.length > 0)
 			{
 				trace('Product received: ${products[0].getLocalizedTitle()}.');
 
-				IAPApple.purchaseProduct(products[0]);
+				IAPIOS.purchaseProduct(products[0]);
 			}
 		});
 
-		IAPApple.onProductDetailsFailed.add(function(error:IAPError):Void
+		IAPIOS.onProductDetailsFailed.add(function(error:IAPError):Void
 		{
 			trace('Product details error: $error.');
 		});
 
-		IAPApple.onPurchasesUpdated.add(function(purchases:Array<IAPPurchase>):Void
+		IAPIOS.onPurchasesUpdated.add(function(purchases:Array<IAPPurchase>):Void
 		{
 			for (purchase in purchases)
 			{
@@ -118,13 +118,13 @@ class Main extends lime.app.Application
 					case IAPPurchaseState.PURCHASED:
 						trace('Purchase successful!');
 
-						IAPApple.finishPurchase(purchase);
+						IAPIOS.finishPurchase(purchase);
 					case IAPPurchaseState.FAILED:
 						trace('Purchase failed: ${purchase.getTransactionError()}.');
 					case IAPPurchaseState.RESTORED:
 						trace('Purchase restored.');
 
-						IAPApple.finishPurchase(purchase);
+						IAPIOS.finishPurchase(purchase);
 					case IAPPurchaseState.DEFERRED:
 						trace('Purchase is deferred.');
 				}
@@ -139,10 +139,10 @@ class Main extends lime.app.Application
 		IAPAndroid.init();
 
 		IAPAndroid.startConnection();
-		#elseif (ios || tvos)
-		IAPApple.init();
+		#elseif ios
+		IAPIOS.init();
 
-		IAPApple.requestProducts(['com.example.app.product1', 'com.example.app.product2']);
+		IAPIOS.requestProducts(['com.example.app.product1', 'com.example.app.product2']);
 		#end
 	}
 

@@ -1,19 +1,19 @@
-package extension.iapcore.apple;
+package extension.iapcore.ios;
 
-#if (ios || tvos)
+#if ios
 /**
  * Information about a registered product in `App Store` Connect.
  * 
  * @see https://developer.apple.com/documentation/storekit/skproduct?language=objc
  */
-@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
+@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
 @:headerInclude('iap_product.hpp')
 class IAPProductDetails
 {
-	@:allow(extension.iapcore.apple.IAPApple)
+	@:allow(extension.iapcore.ios.IAPIOS)
 	private var handle:cpp.Pointer<IAPProduct>;
 
-	@:allow(extension.iapcore.apple.IAPApple)
+	@:allow(extension.iapcore.ios.IAPIOS)
 	private function new(handle:cpp.Pointer<IAPProduct>):Void
 	{
 		this.handle = handle;
@@ -90,8 +90,8 @@ class IAPProductDetails
 	extern private static function releaseProductIAP(product:cpp.RawPointer<IAPProduct>):Void;
 }
 
-@:allow(extension.iapcore.apple.IAPApple)
-@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
+@:allow(extension.iapcore.ios.IAPIOS)
+@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
 @:headerInclude('iap_product.hpp')
 @:native('IAPProduct')
 extern class IAPProduct {}

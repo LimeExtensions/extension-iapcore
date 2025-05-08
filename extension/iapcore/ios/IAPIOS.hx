@@ -1,16 +1,16 @@
-package extension.iapcore.apple;
+package extension.iapcore.ios;
 
-#if (ios || tvos)
-import extension.iapcore.apple.IAPProductDetails;
-import extension.iapcore.apple.IAPPurchase;
+#if ios
+import extension.iapcore.ios.IAPProductDetails;
+import extension.iapcore.ios.IAPPurchase;
 import lime.app.Event;
 
 /**
- * A class for managing in-app purchases on Apple Devices using StoreKit.
+ * A class for managing in-app purchases on iOS Devices using StoreKit.
  */
-@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
+@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
 @:headerInclude('iap_core.hpp')
-class IAPApple
+class IAPIOS
 {
 	/** Event triggered when product details are successfully received from the App Store. */
 	public static final onProductDetailsReceived:Event<Array<IAPProductDetails>->Void> = new Event<Array<IAPProductDetails>->Void>();
@@ -159,7 +159,7 @@ class IAPApple
 	extern private static function canMakePurchasesIAP():Bool;
 }
 
-@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
+@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
 @:include('iap_core.hpp')
 @:structAccess
 @:native('IAPCallbacks')

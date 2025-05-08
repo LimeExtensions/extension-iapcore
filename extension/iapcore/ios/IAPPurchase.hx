@@ -1,19 +1,19 @@
-package extension.iapcore.apple;
+package extension.iapcore.ios;
 
-#if (ios || tvos)
+#if ios
 /**
  * An object in the payment queue.
  * 
  * @see https://developer.apple.com/documentation/storekit/skpaymenttransaction?language=objc
  */
-@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
+@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
 @:headerInclude('iap_transaction.hpp')
 class IAPPurchase
 {
-	@:allow(extension.iapcore.apple.IAPApple)
+	@:allow(extension.iapcore.ios.IAPIOS)
 	private var handle:cpp.Pointer<IAPTransaction>;
 
-	@:allow(extension.iapcore.apple.IAPApple)
+	@:allow(extension.iapcore.ios.IAPIOS)
 	private function new(handle:cpp.Pointer<IAPTransaction>):Void
 	{
 		this.handle = handle;
@@ -119,8 +119,8 @@ class IAPPurchase
 	extern private static function releaseTransactionIAP(transaction:cpp.RawPointer<IAPTransaction>):Void;
 }
 
-@:allow(extension.iapcore.apple.IAPApple)
-@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-apple/Build.xml" />')
+@:allow(extension.iapcore.ios.IAPIOS)
+@:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
 @:headerInclude('iap_transaction.hpp')
 @:native('IAPTransaction')
 extern class IAPTransaction {}

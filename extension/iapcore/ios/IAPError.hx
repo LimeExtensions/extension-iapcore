@@ -1,6 +1,6 @@
-package extension.iapcore.apple;
+package extension.iapcore.ios;
 
-#if (ios || tvos)
+#if ios
 /**
  * Represents an error that occurred during an in-app operation on iOS using StoreKit.
  */
@@ -16,8 +16,8 @@ class IAPError
 	 */
 	public final code:Int;
 
-	@:allow(extension.iapcore.apple.IAPApple)
-	@:allow(extension.iapcore.apple.IAPPurchase)
+	@:allow(extension.iapcore.ios.IAPIOS)
+	@:allow(extension.iapcore.ios.IAPPurchase)
 	private function new(message:String, code:Int):Void
 	{
 		this.message = message;
