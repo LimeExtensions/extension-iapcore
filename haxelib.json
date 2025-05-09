@@ -12,8 +12,8 @@
 		"iap"
 	],
 	"description": "A Haxe/Lime extension that implements In-App Purchases (IAP) functionality for Android and iOS devices.",
-	"version": "1.0.0",
-	"releasenote": "First release.",
+	"version": "1.0.1",
+	"releasenote": "Fixed a crash on iOS.",
 	"contributors": [
 		"MAJigsaw77"
 	],
