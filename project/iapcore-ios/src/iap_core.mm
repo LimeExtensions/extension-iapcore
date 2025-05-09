@@ -6,7 +6,8 @@
 
 #import <StoreKit/StoreKit.h>
 
-static const IAPCallbacks* gIAPCallbacks = nullptr;
+static IAPCallbacks gIAPCallbacksCopy = {};
+static IAPCallbacks* gIAPCallbacks = nullptr;
 
 @interface IAPDelegate : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
@@ -28,6 +29,7 @@ static const IAPCallbacks* gIAPCallbacks = nullptr;
 				for (int i = 0; i < response.products.count; ++i)
 				{
 					IAPProduct* p = new IAPProduct();
+
 					p->product = response.products[i];
 
 #if !__has_feature(objc_arc)
@@ -71,6 +73,7 @@ static const IAPCallbacks* gIAPCallbacks = nullptr;
 				for (int i = 0; i < transactions.count; ++i)
 				{
 					IAPTransaction* t = new IAPTransaction();
+
 					t->transaction = transactions[i];
 
 #if !__has_feature(objc_arc)
@@ -95,13 +98,17 @@ static IAPDelegate* iapDelegate = nil;
 
 void IAP_Init(const IAPCallbacks* callbacks)
 {
-	gIAPCallbacks = callbacks;
+	if (callbacks)
+		gIAPCallbacksCopy = (*callbacks);
+
+	gIAPCallbacks = &gIAPCallbacksCopy;
 
 	dispatch_async(dispatch_get_main_queue(), ^
 	{
 		if (!iapDelegate)
 		{
 			iapDelegate = [IAPDelegate new];
+
 			[[SKPaymentQueue defaultQueue] addTransactionObserver:iapDelegate];
 		}
 	});
