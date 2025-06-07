@@ -1,7 +1,7 @@
 package extension.iapcore.android;
 
 #if android
-import extension.iapcore.android.util.JNICache;
+import extension.iapcore.android.IAPJNICache;
 import lime.system.JNI;
 
 /**
@@ -25,7 +25,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getDeveloperPayloadMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getDeveloperPayload',
+			final getDeveloperPayloadMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getDeveloperPayload',
 				'()Ljava/lang/String;');
 
 			if (getDeveloperPayloadMemberJNI != null)
@@ -45,7 +45,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getOrderIdMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getOrderId',
+			final getOrderIdMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getOrderId',
 				'()Ljava/lang/String;');
 
 			if (getOrderIdMemberJNI != null)
@@ -65,7 +65,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getOriginalJsonMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getOriginalJson',
+			final getOriginalJsonMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getOriginalJson',
 				'()Ljava/lang/String;');
 
 			if (getOriginalJsonMemberJNI != null)
@@ -85,7 +85,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getPackageNameMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPackageName',
+			final getPackageNameMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPackageName',
 				'()Ljava/lang/String;');
 
 			if (getPackageNameMemberJNI != null)
@@ -105,7 +105,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getPendingPurchaseUpdateMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase',
+			final getPendingPurchaseUpdateMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase',
 				'getPendingPurchaseUpdate', "()Lcom/android/billingclient/api/Purchase$PendingPurchaseUpdate;");
 
 			if (getPendingPurchaseUpdateMemberJNI != null)
@@ -125,7 +125,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getProductsMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getProducts',
+			final getProductsMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getProducts',
 				'()Ljava/util/List;');
 
 			if (getProductsMemberJNI != null)
@@ -145,7 +145,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getPurchaseStateMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPurchaseState', '()I');
+			final getPurchaseStateMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPurchaseState', '()I');
 
 			if (getPurchaseStateMemberJNI != null)
 			{
@@ -164,7 +164,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getPurchaseTimeMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPurchaseTime', '()J');
+			final getPurchaseTimeMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPurchaseTime', '()J');
 
 			if (getPurchaseTimeMemberJNI != null)
 			{
@@ -183,7 +183,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getPurchaseTokenMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPurchaseToken',
+			final getPurchaseTokenMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getPurchaseToken',
 				'()Ljava/lang/String;');
 
 			if (getPurchaseTokenMemberJNI != null)
@@ -203,7 +203,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getQuantityMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getQuantity', '()I');
+			final getQuantityMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getQuantity', '()I');
 
 			if (getQuantityMemberJNI != null)
 			{
@@ -222,7 +222,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final getSignatureMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getSignature',
+			final getSignatureMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'getSignature',
 				'()Ljava/lang/String;');
 
 			if (getSignatureMemberJNI != null)
@@ -242,7 +242,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final isAcknowledgedMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'isAcknowledged', '()Z');
+			final isAcknowledgedMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'isAcknowledged', '()Z');
 
 			if (isAcknowledgedMemberJNI != null)
 			{
@@ -261,7 +261,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final hashCodeMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'hashCode', '()I');
+			final hashCodeMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'hashCode', '()I');
 
 			if (hashCodeMemberJNI != null)
 			{
@@ -281,7 +281,7 @@ class IAPPurchase
 	{
 		if (handle != null)
 		{
-			final toStringMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'toString', '()Ljava/lang/String;');
+			final toStringMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/Purchase', 'toString', '()Ljava/lang/String;');
 
 			if (toStringMemberJNI != null)
 			{

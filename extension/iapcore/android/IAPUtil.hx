@@ -1,7 +1,7 @@
 package extension.iapcore.android;
 
 #if android
-import extension.iapcore.android.util.JNICache;
+import extension.iapcore.android.IAPJNICache;
 
 /**
  * A utility class for handling JNI operations related to in-app purchases.
@@ -18,7 +18,7 @@ class IAPUtil
 	{
 		if (longValue != null)
 		{
-			final getFloatFromLongJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCoreUtil', 'getFloatFromLong', '(J)D');
+			final getFloatFromLongJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCoreUtil', 'getFloatFromLong', '(J)D');
 
 			if (getFloatFromLongJNI != null)
 				return getFloatFromLongJNI(longValue);
@@ -37,7 +37,7 @@ class IAPUtil
 	{
 		if (stringList != null)
 		{
-			final getStringArrayFromListJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCoreUtil', 'getStringArrayFromList',
+			final getStringArrayFromListJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCoreUtil', 'getStringArrayFromList',
 				'(Ljava/util/List;)[Ljava/lang/String;');
 
 			if (getStringArrayFromListJNI != null)

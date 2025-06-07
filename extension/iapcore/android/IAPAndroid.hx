@@ -1,7 +1,7 @@
 package extension.iapcore.android;
 
 #if android
-import extension.iapcore.android.util.JNICache;
+import extension.iapcore.android.IAPJNICache;
 import lime.app.Event;
 
 /**
@@ -38,7 +38,7 @@ class IAPAndroid
 	 */
 	public static function init():Void
 	{
-		final initJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'init', '(Lorg/haxe/lime/HaxeObject;)V');
+		final initJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'init', '(Lorg/haxe/lime/HaxeObject;)V');
 
 		if (initJNI != null)
 			initJNI(new IAPAndroidCallbackObject());
@@ -49,7 +49,7 @@ class IAPAndroid
 	 */
 	public static function startConnection():Void
 	{
-		final startConnectionJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'startConnection', '()V');
+		final startConnectionJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'startConnection', '()V');
 
 		if (startConnectionJNI != null)
 			startConnectionJNI();
@@ -62,7 +62,7 @@ class IAPAndroid
 	 */
 	public static function getConnectionState():IAPConnectionState
 	{
-		final getConnectionStateJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'getConnectionState', '()I');
+		final getConnectionStateJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'getConnectionState', '()I');
 
 		if (getConnectionStateJNI != null)
 			return getConnectionStateJNI();
@@ -75,7 +75,7 @@ class IAPAndroid
 	 */
 	public static function endConnection():Void
 	{
-		final endConnectionJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'endConnection', '()V');
+		final endConnectionJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'endConnection', '()V');
 
 		if (endConnectionJNI != null)
 			endConnectionJNI();
@@ -88,7 +88,7 @@ class IAPAndroid
 	 */
 	public static function queryProductDetails(productIds:Array<String>):Void
 	{
-		final queryProductDetailsJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'queryProductDetails', '([Ljava/lang/String;)V');
+		final queryProductDetailsJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'queryProductDetails', '([Ljava/lang/String;)V');
 
 		if (queryProductDetailsJNI != null)
 			queryProductDetailsJNI(productIds);
@@ -99,7 +99,7 @@ class IAPAndroid
 	 */
 	public static function queryPurchases():Void
 	{
-		final queryPurchasesJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'queryPurchases', '()V');
+		final queryPurchasesJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'queryPurchases', '()V');
 
 		if (queryPurchasesJNI != null)
 			queryPurchasesJNI();
@@ -116,7 +116,7 @@ class IAPAndroid
 	{
 		if (productDetails != null && productDetails.handle != null)
 		{
-			final launchPurchaseFlowJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'launchPurchaseFlow',
+			final launchPurchaseFlowJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'launchPurchaseFlow',
 				'(Lcom/android/billingclient/api/ProductDetails;Z)Lcom/android/billingclient/api/BillingResult;');
 
 			if (launchPurchaseFlowJNI != null)
@@ -133,7 +133,7 @@ class IAPAndroid
 	 */
 	public static function consumePurchase(purchaseToken:String):Void
 	{
-		final consumePurchaseJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'consumePurchase', '(Ljava/lang/String;)V');
+		final consumePurchaseJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'consumePurchase', '(Ljava/lang/String;)V');
 
 		if (consumePurchaseJNI != null)
 			consumePurchaseJNI(purchaseToken);
@@ -146,7 +146,7 @@ class IAPAndroid
 	 */
 	public static function acknowledgePurchase(purchaseToken:String):Void
 	{
-		final acknowledgePurchaseJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/IAPCore', 'acknowledgePurchase', '(Ljava/lang/String;)V');
+		final acknowledgePurchaseJNI:Null<Dynamic> = IAPJNICache.createStaticMethod('org/haxe/extension/IAPCore', 'acknowledgePurchase', '(Ljava/lang/String;)V');
 
 		if (acknowledgePurchaseJNI != null)
 			acknowledgePurchaseJNI(purchaseToken);

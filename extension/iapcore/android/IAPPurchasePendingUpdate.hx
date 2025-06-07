@@ -1,7 +1,7 @@
 package extension.iapcore.android;
 
 #if android
-import extension.iapcore.android.util.JNICache;
+import extension.iapcore.android.IAPJNICache;
 import lime.system.JNI;
 
 /**
@@ -25,7 +25,7 @@ class IAPPurchasePendingUpdate
 	{
 		if (handle != null)
 		{
-			final getProductsMemberJNI:Null<Dynamic> = JNICache.createMemberMethod("com/android/billingclient/api/Purchase$PendingPurchaseUpdate",
+			final getProductsMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod("com/android/billingclient/api/Purchase$PendingPurchaseUpdate",
 				'getProducts', '()Ljava/util/List;');
 
 			if (getProductsMemberJNI != null)
@@ -45,7 +45,7 @@ class IAPPurchasePendingUpdate
 	{
 		if (handle != null)
 		{
-			final getPurchaseTokenMemberJNI:Null<Dynamic> = JNICache.createMemberMethod("com/android/billingclient/api/Purchase$PendingPurchaseUpdate",
+			final getPurchaseTokenMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod("com/android/billingclient/api/Purchase$PendingPurchaseUpdate",
 				'getPurchaseToken', '()Ljava/lang/String;');
 
 			if (getPurchaseTokenMemberJNI != null)

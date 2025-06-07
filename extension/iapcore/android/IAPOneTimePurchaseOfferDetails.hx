@@ -1,7 +1,7 @@
 package extension.iapcore.android;
 
 #if android
-import extension.iapcore.android.util.JNICache;
+import extension.iapcore.android.IAPJNICache;
 import lime.system.JNI;
 
 /**
@@ -24,7 +24,7 @@ class IAPOneTimePurchaseOfferDetails
 	{
 		if (handle != null)
 		{
-			final getFormattedPriceMemberJNI:Null<Dynamic> = JNICache.createMemberMethod("com/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails",
+			final getFormattedPriceMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod("com/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails",
 				'getFormattedPrice', '()Ljava/lang/String;');
 
 			if (getFormattedPriceMemberJNI != null)
@@ -44,7 +44,7 @@ class IAPOneTimePurchaseOfferDetails
 	{
 		if (handle != null)
 		{
-			final getPriceAmountMicrosMemberJNI:Null<Dynamic> = JNICache.createMemberMethod("com/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails",
+			final getPriceAmountMicrosMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod("com/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails",
 				'getPriceAmountMicros', '()J');
 
 			if (getPriceAmountMicrosMemberJNI != null)
@@ -64,7 +64,7 @@ class IAPOneTimePurchaseOfferDetails
 	{
 		if (handle != null)
 		{
-			final getPriceCurrencyCodeMemberJNI:Null<Dynamic> = JNICache.createMemberMethod("com/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails",
+			final getPriceCurrencyCodeMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod("com/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails",
 				'getPriceCurrencyCode', '()Ljava/lang/String;');
 
 			if (getPriceCurrencyCodeMemberJNI != null)

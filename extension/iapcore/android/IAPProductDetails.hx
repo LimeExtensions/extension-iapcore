@@ -1,7 +1,7 @@
 package extension.iapcore.android;
 
 #if android
-import extension.iapcore.android.util.JNICache;
+import extension.iapcore.android.IAPJNICache;
 import lime.system.JNI;
 
 /**
@@ -25,7 +25,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final getNameMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getName',
+			final getNameMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getName',
 				'()Ljava/lang/String;');
 
 			if (getNameMemberJNI != null)
@@ -45,7 +45,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final getDescriptionMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getDescription',
+			final getDescriptionMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getDescription',
 				'()Ljava/lang/String;');
 
 			if (getDescriptionMemberJNI != null)
@@ -65,7 +65,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final getOfferDetailsMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails',
+			final getOfferDetailsMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails',
 				'getOneTimePurchaseOfferDetails', "()Lcom/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails;");
 
 			if (getOfferDetailsMemberJNI != null)
@@ -80,7 +80,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final getProductIdMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getProductId',
+			final getProductIdMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getProductId',
 				'()Ljava/lang/String;');
 
 			if (getProductIdMemberJNI != null)
@@ -100,7 +100,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final getProductTypeMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getProductType',
+			final getProductTypeMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getProductType',
 				'()Ljava/lang/String;');
 
 			if (getProductTypeMemberJNI != null)
@@ -120,7 +120,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final getTitleMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getTitle',
+			final getTitleMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'getTitle',
 				'()Ljava/lang/String;');
 
 			if (getTitleMemberJNI != null)
@@ -140,7 +140,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final hashCodeMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'hashCode', '()I');
+			final hashCodeMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'hashCode', '()I');
 
 			if (hashCodeMemberJNI != null)
 			{
@@ -160,7 +160,7 @@ class IAPProductDetails
 	{
 		if (handle != null)
 		{
-			final toStringMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'toString',
+			final toStringMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/ProductDetails', 'toString',
 				'()Ljava/lang/String;');
 
 			if (toStringMemberJNI != null)

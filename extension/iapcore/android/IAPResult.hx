@@ -1,7 +1,7 @@
 package extension.iapcore.android;
 
 #if android
-import extension.iapcore.android.util.JNICache;
+import extension.iapcore.android.IAPJNICache;
 import lime.system.JNI;
 
 /**
@@ -25,7 +25,7 @@ class IAPResult
 	{
 		if (handle != null)
 		{
-			final getDebugMessageMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/BillingResult', 'getDebugMessage',
+			final getDebugMessageMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/BillingResult', 'getDebugMessage',
 				'()Ljava/lang/String;');
 
 			if (getDebugMessageMemberJNI != null)
@@ -45,7 +45,7 @@ class IAPResult
 	{
 		if (handle != null)
 		{
-			final getResponseCodeMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/BillingResult', 'getResponseCode', '()I');
+			final getResponseCodeMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/BillingResult', 'getResponseCode', '()I');
 
 			if (getResponseCodeMemberJNI != null)
 			{
@@ -65,7 +65,7 @@ class IAPResult
 	{
 		if (handle != null)
 		{
-			final toStringMemberJNI:Null<Dynamic> = JNICache.createMemberMethod('com/android/billingclient/api/BillingResult', 'toString',
+			final toStringMemberJNI:Null<Dynamic> = IAPJNICache.createMemberMethod('com/android/billingclient/api/BillingResult', 'toString',
 				'()Ljava/lang/String;');
 
 			if (toStringMemberJNI != null)
