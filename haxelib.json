@@ -12,8 +12,8 @@
 		"iap"
 	],
 	"description": "A Haxe/Lime extension that implements In-App Purchases (IAP) functionality for Android and iOS devices.",
-	"version": "1.0.2",
-	"releasenote": "Clean up the need for JNICache.",
+	"version": "1.0.3",
+	"releasenote": "Add support for Google Play Billing Library 8.0.0 and locked the version of the lib.",
 	"contributors": [
 		"MAJigsaw77"
 	],
