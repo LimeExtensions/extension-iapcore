@@ -14,6 +14,7 @@ import com.android.billingclient.api.ProductDetails;
 import com.android.billingclient.api.PurchasesResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.QueryProductDetailsResult;
 import com.android.billingclient.api.QueryProductDetailsParams;
 import com.android.billingclient.api.QueryPurchasesParams;
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ public class IAPCore extends Extension
 						haxeObject.call2("onPurchasesUpdated", billingResult, purchases != null ? purchases.toArray(new Purchase[0]) : new Purchase[0]);
 				}
 			});
+
+			builder.enableAutoServiceReconnection();
 
 			billingClient = builder.build();
 		}
@@ -127,8 +130,10 @@ public class IAPCore extends Extension
 		billingClient.queryProductDetailsAsync(QueryProductDetailsParams.newBuilder().setProductList(productList).build(), new ProductDetailsResponseListener()
 		{
 			@Override
-			public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList)
+			public void onProductDetailsResponse(BillingResult billingResult, QueryProductDetailsResult queryProductDetailsResult)
 			{
+				List<ProductDetails> productDetailsList = queryProductDetailsResult.getProductDetailsList();
+
 				if (haxeObject != null)
 					haxeObject.call2("onProductDetailsResponse", billingResult, productDetailsList != null ? productDetailsList.toArray(new ProductDetails[0]) : new ProductDetails[0]);
 			}
