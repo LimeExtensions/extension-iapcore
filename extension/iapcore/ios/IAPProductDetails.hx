@@ -17,8 +17,6 @@ class IAPProductDetails
 	private function new(handle:cpp.Pointer<IAPProduct>):Void
 	{
 		this.handle = handle;
-
-		cpp.vm.Gc.setFinalizer(this, cpp.Function.fromStaticFunction(finalize));
 	}
 
 	/** Returns the product identifier. */
@@ -64,11 +62,6 @@ class IAPProductDetails
 			releaseProductIAP(handle.raw);
 	}
 
-	private static function finalize(productDetails:IAPProductDetails):Void
-	{
-		productDetails.release();
-	}
-
 	@:native('IAP_GetProductIdentifier')
 	@:noCompletion
 	extern private static function getProductIdentifierIAP(product:cpp.RawPointer<IAPProduct>):cpp.ConstCharStar;
@@ -92,7 +85,7 @@ class IAPProductDetails
 
 @:allow(extension.iapcore.ios.IAPIOS)
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
-@:headerInclude('iap_product.hpp')
+@:include('iap_product.hpp')
 @:native('IAPProduct')
 extern class IAPProduct {}
 #end

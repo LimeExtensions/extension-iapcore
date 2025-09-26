@@ -17,8 +17,6 @@ class IAPPurchase
 	private function new(handle:cpp.Pointer<IAPTransaction>):Void
 	{
 		this.handle = handle;
-
-		cpp.vm.Gc.setFinalizer(this, cpp.Function.fromStaticFunction(finalize));
 	}
 
 	/** Returns the transaction identifier. */
@@ -85,11 +83,6 @@ class IAPPurchase
 			releaseTransactionIAP(handle.raw);
 	}
 
-	private static function finalize(purchase:IAPPurchase):Void
-	{
-		purchase.release();
-	}
-
 	@:native('IAP_GetTransactionIdentifier')
 	@:noCompletion
 	extern private static function getTransactionIdentifierIAP(transaction:cpp.RawPointer<IAPTransaction>):cpp.ConstCharStar;
@@ -121,7 +114,7 @@ class IAPPurchase
 
 @:allow(extension.iapcore.ios.IAPIOS)
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
-@:headerInclude('iap_transaction.hpp')
+@:include('iap_transaction.hpp')
 @:native('IAPTransaction')
 extern class IAPTransaction {}
 #end
