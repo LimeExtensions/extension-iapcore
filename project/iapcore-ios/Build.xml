@@ -19,7 +19,7 @@
 	</files>
 
 	<target id="haxe">
-		<vflag name="-framework" value="StoreKit" />
+		<vflag name="-framework" value="StoreKit" unless="static_link" />
 
 		<files id="iapcore" />
 	</target>
