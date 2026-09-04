@@ -27,9 +27,9 @@ class IAPIOS
 	public static function init():Void
 	{
 		final callbacks:IAPCallbacks = new IAPCallbacks();
-		callbacks.onProductsReceived = cpp.Callable.fromStaticFunction(onIAPProductsReceived);
-		callbacks.onProductsFailed = cpp.Callable.fromStaticFunction(onIAPProductsFailed);
-		callbacks.onTransactionsUpdated = cpp.Callable.fromStaticFunction(onIAPTransactionsUpdated);
+		callbacks.onProductsReceived = cpp.Callable.fromStaticFunction(IAPIOSCallbacks.onIAPProductsReceived);
+		callbacks.onProductsFailed = cpp.Callable.fromStaticFunction(IAPIOSCallbacks.onIAPProductsFailed);
+		callbacks.onTransactionsUpdated = cpp.Callable.fromStaticFunction(IAPIOSCallbacks.onIAPTransactionsUpdated);
 		initIAP(cpp.RawConstPointer.addressOf(callbacks));
 	}
 
@@ -100,40 +100,6 @@ class IAPIOS
 		return canMakePurchasesIAP();
 	}
 
-	@:noCompletion
-	private static function onIAPProductsReceived(nativeProducts:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:cpp.SizeT):Void
-	{
-		final products:Array<IAPProductDetails> = [];
-
-		if (nativeProducts != null)
-		{
-			for (i in 0...count)
-				products.push(new IAPProductDetails(cpp.Pointer.fromRaw(nativeProducts[i])));
-		}
-
-		onProductDetailsReceived.dispatch(products);
-	}
-
-	@:noCompletion
-	private static function onIAPProductsFailed(message:cpp.ConstCharStar, code:Int):Void
-	{
-		onProductDetailsFailed.dispatch(new IAPError((message : String), code));
-	}
-
-	@:noCompletion
-	private static function onIAPTransactionsUpdated(nativeTransactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT):Void
-	{
-		final purchases:Array<IAPPurchase> = [];
-
-		if (nativeTransactions != null)
-		{
-			for (i in 0...count)
-				purchases.push(new IAPPurchase(cpp.Pointer.fromRaw(nativeTransactions[i])));
-		}
-
-		onPurchasesUpdated.dispatch(purchases);
-	}
-
 	@:native('IAP_Init')
 	@:noCompletion
 	extern private static function initIAP(callbacks:cpp.RawConstPointer<IAPCallbacks>):Void;
@@ -157,6 +123,50 @@ class IAPIOS
 	@:native('IAP_CanMakePurchases')
 	@:noCompletion
 	extern private static function canMakePurchasesIAP():Bool;
+}
+
+/**
+ * Holds the native `StoreKit` callbacks.
+ */
+@:access(extension.iapcore.ios.IAPError)
+@:access(extension.iapcore.ios.IAPProductDetails)
+@:access(extension.iapcore.ios.IAPPurchase)
+@:unreflective
+private class IAPIOSCallbacks
+{
+	@:noCompletion
+	public static function onIAPProductsReceived(nativeProducts:cpp.RawPointer<cpp.RawPointer<IAPProduct>>, count:cpp.SizeT):Void
+	{
+		final products:Array<IAPProductDetails> = [];
+
+		if (nativeProducts != null)
+		{
+			for (i in 0...count)
+				products.push(new IAPProductDetails(cpp.Pointer.fromRaw(nativeProducts[i])));
+		}
+
+		IAPIOS.onProductDetailsReceived.dispatch(products);
+	}
+
+	@:noCompletion
+	public static function onIAPProductsFailed(message:cpp.ConstCharStar, code:Int):Void
+	{
+		IAPIOS.onProductDetailsFailed.dispatch(new IAPError((message : String), code));
+	}
+
+	@:noCompletion
+	public static function onIAPTransactionsUpdated(nativeTransactions:cpp.RawPointer<cpp.RawPointer<IAPTransaction>>, count:cpp.SizeT):Void
+	{
+		final purchases:Array<IAPPurchase> = [];
+
+		if (nativeTransactions != null)
+		{
+			for (i in 0...count)
+				purchases.push(new IAPPurchase(cpp.Pointer.fromRaw(nativeTransactions[i])));
+		}
+
+		IAPIOS.onPurchasesUpdated.dispatch(purchases);
+	}
 }
 
 @:buildXml('<include name="${haxelib:extension-iapcore}/project/iapcore-ios/Build.xml" />')
